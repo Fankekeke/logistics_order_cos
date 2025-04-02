@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.ExamineInfoMapper">
+
+    <!-- 分页获取问题检查信息 -->
+    <select id="queryExaminePage" resultType="java.util.LinkedHashMap">
+        select
+        wi.id,
+        wi.purchase_code,
+        wi.content,
+        wi.drug_id,
+        wi.create_date,
+        wi.create_by,
+        wi.amount,
+        wi.stock_codes,
+        wi.merchant_id,
+        mi.name as pharmacyName,
+        mi.code as pharmacyCode,
+        mi.images as pharmacyImages,
+        di.name as drugName,
+        di.portion,
+        di.raw_material,
+        di.images,
+        pi2.amount,
+        pi2.purchaser,
+        pi2.total_price
+        from
+        examine_info wi
+        left join merchant_info mi on
+        (mi.id = wi.merchant_id)
+        left join dishes_info di on
+        (di.id = wi.drug_id)
+        left join purchase_info pi2 on
+        (pi2.code = wi.purchase_code)
+        where
+        1 = 1
+        <if test="examineInfo.pharmacyName != null and examineInfo.pharmacyName != ''">
+            AND mi.name LIKE CONCAT('%',#{examineInfo.pharmacyName},'%')
+        </if>
+        <if test="examineInfo.drugName != null and examineInfo.drugName != ''">
+            AND di.name LIKE CONCAT('%',#{examineInfo.drugName},'%')
+        </if>
+        <if test="examineInfo.merchantId != null">
+            AND mi.user_id = #{examineInfo.merchantId}
+        </if>
+        order by
+        wi.create_date desc
+    </select>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.WarrantyInfoMapper">
+
+    <!-- 分页获取保质期预警信息 -->
+    <select id="queryWarrantyPage" resultType="java.util.LinkedHashMap">
+        select
+        pin.id,
+        pin.pharmacy_id,
+        pin.drug_id,
+        count(pin.reserve) as reserve,
+        pin.shelf_status,
+        pin.start_date,
+        pin.end_date,
+        pin.purchase_code,
+        pin.inventory_code,
+        pin.remark,
+        pi2.name as pharmacyName,
+        pi2.code as pharmacyCode,
+        di.name as drugName,
+        di.portion,
+        di.raw_material,
+        di.images,
+        ti.name as typeName,
+        to_days(now()) - to_days(pin.end_date) AS dayNum
+        from
+        pharmacy_inventory pin
+        left join merchant_info pi2 on (pi2.id = pin.pharmacy_id)
+        left join dishes_info di on (di.id = pin.drug_id)
+        left join type_info ti on (ti.id = di.type_id)
+        where 1 = 1
+        AND pin.shelf_status = 1
+        AND to_days(now()) - to_days(pin.end_date) > -30
+        <if test="warrantyInfo.pharmacyName != null and warrantyInfo.pharmacyName != ''">
+            AND pi2.name LIKE CONCAT('%',#{warrantyInfo.pharmacyName},'%')
+        </if>
+        <if test="warrantyInfo.drugName != null and warrantyInfo.drugName != ''">
+            AND di.name LIKE CONCAT('%',#{warrantyInfo.drugName},'%')
+        </if>
+        <if test="warrantyInfo.merchantId != null and warrantyInfo.merchantId != ''">
+            AND pi2.user_id = #{warrantyInfo.merchantId}
+        </if>
+        GROUP BY pin.pharmacy_id, pin.purchase_code, pin.drug_id
+    </select>
+    <!-- 分页获取保质期预警信息 -->
+    <select id="queryWarrantyPageTe4st" resultType="java.util.LinkedHashMap">
+        select
+        wi.id,
+        wi.purchase_code,
+        wi.content,
+        wi.drug_id,
+        wi.create_date,
+        wi.stock_codes,
+        wi.merchant_id,
+        mi.name as pharmacyName,
+        mi.code as pharmacyCode,
+        mi.images as pharmacyImages,
+        di.name as drugName,
+        di.portion,
+        di.raw_material,
+        di.images,
+        pi2.amount,
+        pi2.purchaser,
+        pi2.total_price
+        from
+        warranty_info wi
+        left join merchant_info mi on
+        (mi.id = wi.merchant_id)
+        left join dishes_info di on
+        (di.id = wi.drug_id)
+        left join purchase_info pi2 on
+        (pi2.code = wi.purchase_code)
+        where
+        1 = 1
+        <if test="warrantyInfo.pharmacyName != null and warrantyInfo.pharmacyName != ''">
+            AND mi.name LIKE CONCAT('%',#{warrantyInfo.pharmacyName},'%')
+        </if>
+        <if test="warrantyInfo.drugName != null and warrantyInfo.drugName != ''">
+            AND di.name LIKE CONCAT('%',#{warrantyInfo.drugName},'%')
+        </if>
+        order by
+        wi.create_date desc
+    </select>
+</mapper>

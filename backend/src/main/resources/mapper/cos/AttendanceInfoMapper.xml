@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.AttendanceInfoMapper">
+
+    <!-- 分页获取考勤打卡 -->
+    <select id="queryAttendancePage" resultType="java.util.LinkedHashMap">
+        select
+        ai.id,
+        ai.staff_id,
+        ai.put_take_date,
+        ai.out_take_date,
+        si.code as staffCode,
+        si.name as staffName,
+        si.images as staffImages,
+        mi.name as merchantName,
+        mi.code as merchantCode,
+        mi.images as merchantImage
+        from
+        attendance_info ai
+        left join staff_info si on (si.id = ai.staff_id)
+        left join merchant_info mi on
+        (mi.id = si.canteen_id)
+        where 1 = 1
+        <if test="attendanceInfo.staffName != null and attendanceInfo.staffName != ''">
+            AND si.name LIKE CONCAT('%',#{attendanceInfo.staffName},'%')
+        </if>
+        <if test="attendanceInfo.staffId != null and attendanceInfo.staffId != ''">
+            AND si.user_id = #{attendanceInfo.staffId}
+        </if>
+        <if test="attendanceInfo.merchantId != null and attendanceInfo.merchantId != ''">
+            AND mi.user_id = #{attendanceInfo.merchantId}
+        </if>
+        order by ai.put_take_date desc
+    </select>
+
+    <!-- 校验今日是否已经打卡 -->
+    <select id="queryTodayCheck" resultType="cc.mrbird.febs.cos.entity.AttendanceInfo">
+        select * from attendance_info ai
+        left join staff_info ui on
+        (ui.id = ai.staff_id)
+        where
+        1 = 1
+        <if test="userId != null and userId != ''">
+            AND ui.user_id = #{userId}
+        </if>
+        AND date_format(ai.put_take_date, '%Y-%m-%d') = date_format(#{createDate}, '%Y-%m-%d')
+    </select>
+</mapper>

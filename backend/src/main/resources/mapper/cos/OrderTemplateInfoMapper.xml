@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.OrderTemplateInfoMapper">
+
+    <!-- 分页获取订单模板信息 -->
+    <select id="queryOrderTemplatePage" resultType="java.util.LinkedHashMap">
+        select
+        id,
+        code,
+        name,
+        content,
+        create_date,
+        default_flag
+        from
+        order_template_info
+        where 1 = 1
+        <if test="orderTemplateInfo.code != null and orderTemplateInfo.code != ''">
+            AND code LIKE CONCAT('%',#{orderTemplateInfo.code},'%')
+        </if>
+        <if test="orderTemplateInfo.name != null and orderTemplateInfo.name != ''">
+            AND name LIKE CONCAT('%',#{orderTemplateInfo.name},'%')
+        </if>
+        order by create_date desc
+    </select>
+</mapper>

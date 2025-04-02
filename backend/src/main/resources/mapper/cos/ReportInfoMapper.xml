@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.ReportInfoMapper">
+
+    <!-- 分页获取员工信息 -->
+    <select id="selectReportPage" resultType="java.util.LinkedHashMap">
+        SELECT
+            ri.*,
+            di.`name` AS drugName,
+            pi.`name` AS pharmacyName,
+            ui.`name` AS userName
+        FROM
+            report_info ri
+                LEFT JOIN drug_info di ON ( di.id = ri.drug_id )
+                LEFT JOIN pharmacy_info pi ON ( pi.id = ri.pharmacy_id )
+                LEFT JOIN user_info ui ON ( ui.id = ri.user_id )
+        WHERE
+            1 = 1
+        <if test="reportInfo.code != null and reportInfo.code != ''">
+            AND ri.code LIKE CONCAT('%',#{reportInfo.code},'%')
+        </if>
+        ORDER BY
+            ri.create_date DESC
+    </select>
+
+    <!-- 获取订单信息 -->
+    <select id="selectOrderList" resultType="java.util.LinkedHashMap">
+        select
+        od.id,
+        od.drug_id,
+        od.quantity,
+        od.unit_price AS unitPrice,
+        od.all_price,
+        od.order_id,
+        di.name AS drugName,
+        di.brand,
+        oi.code,
+        ui.name,
+        ui.phone,
+        ui.address AS userAddress,
+        pi.name as pharmacyName,
+        oi.create_date as createDate
+        from
+        order_detail od
+        left join drug_info di on
+        (di.id = od.drug_id)
+        left join order_info oi on
+        (oi.id = od.order_id)
+        left join pharmacy_info pi on
+        (pi.id = oi.pharmacy_id)
+        left join user_info ui on
+        (ui.id = oi.user_id)
+        where
+        1 = 1
+        <if test="orderInfo.drugId != null and orderInfo.drugId != ''">
+            AND di.id = #{orderInfo.drugId}
+        </if>
+        <if test="orderInfo.pharmacyId != null and orderInfo.pharmacyId != ''">
+            AND pi.id = #{orderInfo.pharmacyId}
+        </if>
+        <if test="orderInfo.userId != null and orderInfo.userId != ''">
+            AND ui.id = #{orderInfo.userId}
+        </if>
+        <if test="orderInfo.startDate != null and orderInfo.startDate != '' and orderInfo.endDate != null and orderInfo.endDate != ''">
+            AND oi.create_date BETWEEN #{orderInfo.startDate} AND #{orderInfo.endDate}
+        </if>
+    </select>
+</mapper>

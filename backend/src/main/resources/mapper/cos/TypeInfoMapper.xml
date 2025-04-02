@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.TypeInfoMapper">
+
+    <!-- 分页获取药品类型信息 -->
+    <select id="selectFirnitureTypePage" resultType="java.util.LinkedHashMap">
+        SELECT
+        *
+        FROM
+        type_info
+        WHERE
+        1 = 1
+        <if test="typeInfo.name != null and typeInfo.name != ''">
+            AND name LIKE CONCAT('%',#{typeInfo.name},'%')
+        </if>
+        <if test="typeInfo.code != null and typeInfo.code != ''">
+            AND code LIKE CONCAT('%',#{typeInfo.code},'%')
+        </if>
+        <if test="typeInfo.remark != null and typeInfo.remark != ''">
+            AND remark LIKE CONCAT('%',#{typeInfo.remark},'%')
+        </if>
+    </select>
+</mapper>

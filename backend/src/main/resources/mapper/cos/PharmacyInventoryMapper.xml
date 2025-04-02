@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.PharmacyInventoryMapper">
+
+    <!-- 分页获取药店库存信息 -->
+    <select id="selectPharmacyInventoryPage" resultType="java.util.LinkedHashMap">
+        select
+        pin.id,
+        pin.pharmacy_id,
+        pin.drug_id,
+        count(pin.reserve) as reserve,
+        pin.shelf_status,
+        pin.start_date,
+        pin.end_date,
+        pin.purchase_code,
+        pin.inventory_code,
+        pin.remark,
+        pi2.name as pharmacyName,
+        pi2.code as pharmacyCode,
+        di.name as drugName,
+        di.portion,
+        di.raw_material,
+        di.images,
+        ti.name as typeName
+        from
+        pharmacy_inventory pin
+        left join merchant_info pi2 on (pi2.id = pin.pharmacy_id)
+        left join dishes_info di on (di.id = pin.drug_id)
+        left join type_info ti on (ti.id = di.type_id)
+        where 1 = 1
+        AND pin.shelf_status = 1
+        <if test="pharmacyInventory.pharmacyName != null and pharmacyInventory.pharmacyName != ''">
+            AND pi2.name LIKE CONCAT('%',#{pharmacyInventory.pharmacyName},'%')
+        </if>
+        <if test="pharmacyInventory.drugName != null and pharmacyInventory.drugName != ''">
+            AND di.name LIKE CONCAT('%',#{pharmacyInventory.drugName},'%')
+        </if>
+        <if test="pharmacyInventory.rawMaterial != null and pharmacyInventory.rawMaterial != ''">
+            AND di.raw_material LIKE CONCAT('%',#{pharmacyInventory.rawMaterial},'%')
+        </if>
+        <if test="pharmacyInventory.merchantId != null">
+            AND pi2.user_id = #{pharmacyInventory.merchantId}
+        </if>
+        GROUP BY pin.pharmacy_id, pin.drug_id
+    </select>
+
+    <!-- 根据药房ID获取库存信息 -->
+    <select id="selectInventoryByPharmacyTRS1R" resultType="java.util.LinkedHashMap">
+        select
+        count(pin.reserve) as laveNum,
+        di.id,
+        di.code,
+        di.name,
+        di.content,
+        di.raw_material,
+        di.portion,
+        di.taste,
+        di.unit_price,
+        di.receive_unit_price,
+        di.integral_unit,
+        di.prescription_flag,
+        di.sale_num,
+        di.status,
+        di.merchant_id,
+        di.create_date,
+        di.images,
+        di.heat,
+        di.protein,
+        di.fat,
+        di.type_id,
+        pi2.name as pharmacyName,
+        pi2.code as pharmacyCode,
+        di.name as drugName,
+        di.portion,
+        di.raw_material,
+        di.images,
+        ti.name as typeName
+        from
+        pharmacy_inventory pin
+        left join merchant_info pi2 on (pi2.id = pin.pharmacy_id)
+        left join dishes_info di on (di.id = pin.drug_id)
+        left join type_info ti on (ti.id = di.type_id)
+        where 1 = 1
+        AND pin.shelf_status = 1
+        AND pin.pharmacy_id = #{pharmacyId}
+        AND di.status = 1
+        AND pin.drug_id IN
+        <foreach collection="dishesIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY pin.pharmacy_id, pin.drug_id
+        HAVING count(pin.reserve) > 0
+    </select>
+
+    <!-- 根据药房ID获取库存信息 -->
+    <select id="selectInventoryByPharmacy" resultType="java.util.LinkedHashMap">
+        select
+        pin.id,
+        pin.pharmacy_id,
+        pin.drug_id,
+        pin.reserve,
+        pin.shelf_status,
+        pin.start_date,
+        pin.end_date,
+        pin.remark,
+        pi2.name as pharmacyName,
+        pi2.code as pharmacyCode,
+        di.name as drugName,
+        di.brand,
+        di.category,
+        di.classification,
+        di.dosage_form,
+        di.unit_price,
+        di.images
+        from
+        pharmacy_inventory pin
+        left join pharmacy_info pi2 on (pi2.id = pin.pharmacy_id)
+        left join drug_info di on (di.id = pin.drug_id)
+        where 1 = 1
+        and pin.pharmacy_id = #{ pharmacyId }
+    </select>
+
+    <!-- 获取药品信息 -->
+    <select id="selectPharmacyDrugList" resultType="java.util.LinkedHashMap">
+        select
+        pin.id,
+        pin.pharmacy_id,
+        pin.drug_id,
+        pin.reserve,
+        pin.shelf_status,
+        pin.start_date,
+        pin.end_date,
+        pin.remark,
+        pi2.name as pharmacyName,
+        pi2.code as pharmacyCode,
+        di.name as drugName,
+        di.brand,
+        di.category,
+        di.classification,
+        di.dosage_form,
+        di.unit_price,
+        di.images
+        from
+        pharmacy_inventory pin
+        left join pharmacy_info pi2 on (pi2.id = pin.pharmacy_id)
+        left join drug_info di on (di.id = pin.drug_id)
+        where 1 = 1
+        AND pin.shelf_status = 1
+        <if test="key != null and key != ''">
+            AND di.name LIKE CONCAT('%',#{key},'%')
+        </if>
+    </select>
+</mapper>
