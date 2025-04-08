@@ -1,6 +1,7 @@
 package cc.mrbird.febs.cos.controller;
 
 
+import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.R;
 import cc.mrbird.febs.cos.entity.ScheduleInfo;
 import cc.mrbird.febs.cos.service.IScheduleInfoService;
@@ -43,8 +44,30 @@ public class ScheduleInfoController {
      * @return 结果
      */
     @GetMapping("/orderBindSchedule")
-    public R orderBindSchedule(Integer vehicleId, Integer orderId) {
+    public R orderBindSchedule(Integer vehicleId, Integer orderId) throws FebsException {
+        return R.ok(scheduleInfoService.orderBindSchedule(vehicleId, orderId));
+    }
+
+    /**
+     * 订单送达
+     *
+     * @param orderId 订单ID
+     * @return 结果
+     */
+    @GetMapping("/orderCheck")
+    public R orderCheck(Integer orderId) {
         return R.ok();
+    }
+
+    /**
+     * 查询车次记录信息
+     *
+     * @param scheduleCode 车次编号
+     * @return 结果
+     */
+    @GetMapping("/querySchedule")
+    public R querySchedule(String scheduleCode) throws FebsException {
+        return R.ok(scheduleInfoService.querySchedule(scheduleCode));
     }
 
     /**

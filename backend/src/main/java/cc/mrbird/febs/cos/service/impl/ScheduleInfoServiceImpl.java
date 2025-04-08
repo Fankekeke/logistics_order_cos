@@ -94,6 +94,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
             scheduleCode = "SCH-" + System.currentTimeMillis();
             // 更新车辆车次
             vehicleInfo.setScheduleCode(scheduleCode);
+            vehicleInfo.setWorkStatus("1");
             vehicleInfoService.updateById(vehicleInfo);
 
             scheduleInfo.setScheduleCode(scheduleCode);
@@ -138,6 +139,38 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         }
         this.updateBatchById(scheduleInfoList);
         return true;
+    }
+
+    /**
+     * 订单检查
+     *
+     * @param orderId 订单ID
+     * @return 结果
+     */
+    @Override
+    public boolean orderCheck(Integer orderId) throws FebsException {
+        // 获取订单所属车次
+        ScheduleInfo scheduleInfo = this.getOne(Wrappers.<ScheduleInfo>lambdaQuery().eq(ScheduleInfo::getOrderId, orderId));
+        if (scheduleInfo == null) {
+            throw new FebsException("订单所属车次不存在！");
+        }
+
+        // 更新车辆调度状态
+        scheduleInfo.setStatus("1");
+        this.updateById(scheduleInfo);
+
+        // 获取其他订单是否完成
+        List<ScheduleInfo> scheduleInfoList = this.list(Wrappers.<ScheduleInfo>lambdaQuery().eq(ScheduleInfo::getScheduleCode, scheduleInfo.getScheduleCode()));
+        // 判断所有订单是否完成
+        for (ScheduleInfo info : scheduleInfoList) {
+            if (!"1".equals(info.getStatus())) {
+                return false;
+            }
+        }
+
+        // 更新订单所属车辆状态
+        VehicleInfo vehicleInfo = vehicleInfoService.getById(scheduleInfo.getVehicleId());
+        return false;
     }
 
     /**

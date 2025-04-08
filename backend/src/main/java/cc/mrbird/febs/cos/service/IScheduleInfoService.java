@@ -22,6 +22,14 @@ public interface IScheduleInfoService extends IService<ScheduleInfo> {
     boolean orderBindSchedule(Integer vehicleId, Integer orderId) throws FebsException;
 
     /**
+     * 订单检查
+     *
+     * @param orderId 订单ID
+     * @return 结果
+     */
+    boolean orderCheck(Integer orderId) throws FebsException;
+
+    /**
      * 查询车辆调度信息
      *
      * @param scheduleCode 车辆调度编号
