@@ -57,6 +57,9 @@ public class ScheduleInfo implements Serializable {
      */
     private String scheduleCode;
 
+    private BigDecimal currentLongitude;
+    private BigDecimal currentLatitude;
+
     /**
      * 上一个点位经度
      */

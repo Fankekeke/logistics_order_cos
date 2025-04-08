@@ -84,9 +84,24 @@ public class VehicleInfo implements Serializable {
     private Integer userId;
 
     /**
+     * 所属商家
+     */
+    private Integer merchantId;
+
+    /**
      * 车辆类型（1.72V以上电动车 2.60V-72V电动车 3.48V电动车 4.老年助力三轮车 5.摩托车）
      */
     private Integer vehicleType;
+
+    /**
+     * 所属车次
+     */
+    private String scheduleCode;
+
+    /**
+     * 作业状态（0.空闲 1.作业中）
+     */
+    private String workStatus;
 
     @TableField(exist = false)
     private String userName;
