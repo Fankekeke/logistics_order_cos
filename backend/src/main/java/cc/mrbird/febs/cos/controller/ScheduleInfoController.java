@@ -55,8 +55,8 @@ public class ScheduleInfoController {
      * @return 结果
      */
     @GetMapping("/orderCheck")
-    public R orderCheck(Integer orderId) {
-        return R.ok();
+    public R orderCheck(Integer orderId) throws FebsException {
+        return R.ok(scheduleInfoService.orderCheck(orderId));
     }
 
     /**

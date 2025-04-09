@@ -154,23 +154,17 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         if (scheduleInfo == null) {
             throw new FebsException("订单所属车次不存在！");
         }
-
         // 更新车辆调度状态
         scheduleInfo.setStatus("1");
         this.updateById(scheduleInfo);
-
         // 获取其他订单是否完成
         List<ScheduleInfo> scheduleInfoList = this.list(Wrappers.<ScheduleInfo>lambdaQuery().eq(ScheduleInfo::getScheduleCode, scheduleInfo.getScheduleCode()));
         // 判断所有订单是否完成
-        for (ScheduleInfo info : scheduleInfoList) {
-            if (!"1".equals(info.getStatus())) {
-                return false;
-            }
+        boolean hasSchedule = scheduleInfoList.stream().allMatch(info -> info.getStatus().equals("1"));
+        if (hasSchedule) {
+            vehicleInfoService.update(Wrappers.<VehicleInfo>lambdaUpdate().set(VehicleInfo::getWorkStatus, "0").set(VehicleInfo::getScheduleCode, null).eq(VehicleInfo::getId, scheduleInfo.getVehicleId()));
         }
-
-        // 更新订单所属车辆状态
-        VehicleInfo vehicleInfo = vehicleInfoService.getById(scheduleInfo.getVehicleId());
-        return false;
+        return true;
     }
 
     /**
