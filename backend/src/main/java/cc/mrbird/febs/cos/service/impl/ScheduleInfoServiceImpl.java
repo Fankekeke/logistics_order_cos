@@ -7,7 +7,9 @@ import cc.mrbird.febs.cos.dao.ScheduleInfoMapper;
 import cc.mrbird.febs.cos.service.*;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,18 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
     private final IOrderInfoService orderInfoService;
 
     private final IUserInfoService userInfoService;
+
+    /**
+     * 分页获取车次记录信息
+     *
+     * @param page         分页对象
+     * @param scheduleInfo 车次记录信息
+     * @return 结果
+     */
+    @Override
+    public IPage<LinkedHashMap<String, Object>> queryScheduleByPage(Page<ScheduleInfo> page, ScheduleInfo scheduleInfo) {
+        return baseMapper.queryScheduleByPage(page, scheduleInfo);
+    }
 
     /**
      * 订单绑定未工作车辆

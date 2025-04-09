@@ -33,7 +33,7 @@ public class ScheduleInfoController {
      */
     @GetMapping("/page")
     public R page(Page<ScheduleInfo> page, ScheduleInfo scheduleInfo) {
-        return R.ok();
+        return R.ok(scheduleInfoService.queryScheduleByPage(page, scheduleInfo));
     }
 
     /**
