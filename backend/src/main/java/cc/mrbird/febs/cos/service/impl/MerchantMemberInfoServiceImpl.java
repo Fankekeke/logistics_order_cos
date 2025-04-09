@@ -17,10 +17,10 @@ import java.util.LinkedHashMap;
 public class MerchantMemberInfoServiceImpl extends ServiceImpl<MerchantMemberInfoMapper, MerchantMemberInfo> implements IMerchantMemberInfoService {
 
     /**
-     * 分页获取药店会员信息
+     * 分页获取商家会员信息
      *
      * @param page        分页对象
-     * @param merchantMemberInfo 药店会员信息
+     * @param merchantMemberInfo 商家会员信息
      * @return 结果
      */
     @Override

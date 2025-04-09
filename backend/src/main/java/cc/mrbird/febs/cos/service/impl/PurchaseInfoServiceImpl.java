@@ -37,10 +37,10 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoMapper, Pur
     private final IPharmacyInventoryService inventoryService;
 
     /**
-     * 分页获取药品采购信息
+     * 分页获取商品采购信息
      *
      * @param page 分页对象
-     * @param purchaseInfo 药品采购信息
+     * @param purchaseInfo 商品采购信息
      * @return 结果
      */
     @Override
@@ -64,9 +64,9 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoMapper, Pur
     }
 
     /**
-     * 新增药品采购信息
+     * 新增商品采购信息
      *
-     * @param purchaseInfo 药品采购信息
+     * @param purchaseInfo 商品采购信息
      * @return 结果
      */
     @Override
@@ -89,7 +89,7 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoMapper, Pur
     }
 
     /**
-     * 采购单详情-药品物流
+     * 采购单详情-商品物流
      *
      * @param id 采购ID
      * @return 结果

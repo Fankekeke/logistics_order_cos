@@ -22,10 +22,10 @@ public interface IInventoryStatisticsService extends IService<InventoryStatistic
     IPage<LinkedHashMap<String, Object>> selectInventoryPage(Page<InventoryStatistics> page, InventoryStatistics inventoryStatistics);
 
     /**
-     * 获取药品出入库详情
+     * 获取商品出入库详情
      *
-     * @param pharmacyId 药房ID
-     * @param drugId     药品ID
+     * @param pharmacyId 商家ID
+     * @param drugId     商品ID
      * @return 结果
      */
     LinkedHashMap<String, Object> selectInventoryStatistics(Integer pharmacyId, Integer drugId);

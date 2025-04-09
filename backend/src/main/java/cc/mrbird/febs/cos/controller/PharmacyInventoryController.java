@@ -27,7 +27,7 @@ public class PharmacyInventoryController {
     private final IPharmacyInventoryService pharmacyInventoryService;
 
     /**
-     * 获取药品信息
+     * 获取商品信息
      *
      * @param key key
      * @return 结果
@@ -38,7 +38,7 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 药品上下架
+     * 商品上下架
      *
      * @param id     库存ID
      * @param status 状态
@@ -51,10 +51,10 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 分页获取药店库存信息
+     * 分页获取商家库存信息
      *
      * @param page              分页对象
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @GetMapping("/page")
@@ -77,7 +77,7 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 根据采购单号查询正常药品信息
+     * 根据采购单号查询正常商品信息
      *
      * @param purchaseCode 采购单号
      * @return 结果
@@ -88,9 +88,9 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     @GetMapping("/detail/pharmacy/{pharmacyId}")
@@ -101,7 +101,7 @@ public class PharmacyInventoryController {
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @PostMapping("/put/reserve")
@@ -112,7 +112,7 @@ public class PharmacyInventoryController {
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @PostMapping("/out/reserve")
@@ -142,9 +142,9 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 新增药店库存信息
+     * 新增商家库存信息
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @PostMapping
@@ -166,9 +166,9 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 修改药店库存信息
+     * 修改商家库存信息
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @PutMapping
@@ -177,10 +177,10 @@ public class PharmacyInventoryController {
     }
 
     /**
-     * 删除药店库存信息
+     * 删除商家库存信息
      *
      * @param ids ids
-     * @return 药店库存信息
+     * @return 商家库存信息
      */
     @DeleteMapping("/{ids}")
     public R deleteByIds(@PathVariable("ids") List<Integer> ids) {

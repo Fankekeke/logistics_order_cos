@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 public interface PurchaseInfoMapper extends BaseMapper<PurchaseInfo> {
 
     /**
-     * 分页获取药品采购信息
+     * 分页获取商品采购信息
      *
      * @param page 分页对象
-     * @param purchaseInfo 药品采购信息
+     * @param purchaseInfo 商品采购信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectPurchasePage(Page<PurchaseInfo> page, @Param("purchaseInfo") PurchaseInfo purchaseInfo);

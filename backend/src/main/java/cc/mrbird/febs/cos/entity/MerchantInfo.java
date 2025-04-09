@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 药店管理
+ * 商家管理
  *
  * @author FanK
  */
@@ -102,7 +102,7 @@ public class MerchantInfo implements Serializable {
     private BigDecimal latitude;
 
     /**
-     * 药店管理员ID
+     * 商家管理员ID
      */
     private Integer userId;
 

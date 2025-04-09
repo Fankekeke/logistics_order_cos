@@ -58,16 +58,16 @@ public class StockAlertInfoServiceImpl extends ServiceImpl<StockAlertInfoMapper,
         }
         List<Integer> pharmacyIds = pharmacyInfoList.stream().map(MerchantInfo::getId).collect(Collectors.toList());
 
-        // 获取药店库存
+        // 获取商家库存
         List<PharmacyInventory> inventoryList = pharmacyInventoryService.list(Wrappers.<PharmacyInventory>lambdaQuery().in(PharmacyInventory::getPharmacyId, pharmacyIds).eq(PharmacyInventory::getShelfStatus, 1));
         if (CollectionUtil.isEmpty(inventoryList)) {
             return;
         }
-        // 按药店分组
+        // 按商家分组
         Map<Integer, List<PharmacyInventory>> inventoryMap = inventoryList.stream().collect(Collectors.groupingBy(PharmacyInventory::getPharmacyId));
 
         List<Integer> drugIds = inventoryList.stream().map(PharmacyInventory::getDrugId).distinct().collect(Collectors.toList());
-        // 药品信息
+        // 商品信息
         List<DishesInfo> drugInfoList = (List<DishesInfo>) dishesInfoService.listByIds(drugIds);
         Map<Integer, String> drugMap = drugInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, DishesInfo::getName));
 
@@ -75,13 +75,13 @@ public class StockAlertInfoServiceImpl extends ServiceImpl<StockAlertInfoMapper,
         List<StockAlertInfo> stockAlertInfoList = new ArrayList<>();
 
         for (Integer pharmacyId : pharmacyIds) {
-            // 获取该药店库存信息
+            // 获取该商家库存信息
             List<PharmacyInventory> currentPharmacyInventoryList = inventoryMap.get(pharmacyId);
             if (CollectionUtil.isEmpty(currentPharmacyInventoryList)) {
                 continue;
             }
 
-            // 库存信息按药品分类
+            // 库存信息按商品分类
             Map<Integer, List<PharmacyInventory>> inventoryMap1 = currentPharmacyInventoryList.stream().collect(Collectors.groupingBy(PharmacyInventory::getDrugId));
             inventoryMap1.forEach((key, value) -> {
                 if (value.size() <= 15) {
@@ -90,7 +90,7 @@ public class StockAlertInfoServiceImpl extends ServiceImpl<StockAlertInfoMapper,
                     stockAlert.setShopId(pharmacyId);
                     stockAlert.setStatus(0);
                     stockAlert.setCreateDate(DateUtil.formatDateTime(new Date()));
-                    stockAlert.setRemark("药品【" + drugMap.get(key) + "】库存数量为 " + value.size() + ", 请尽快补货");
+                    stockAlert.setRemark("商品【" + drugMap.get(key) + "】库存数量为 " + value.size() + ", 请尽快补货");
                     stockAlertInfoList.add(stockAlert);
                 }
             });

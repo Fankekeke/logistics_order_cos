@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 public interface TypeInfoMapper extends BaseMapper<TypeInfo> {
 
     /**
-     * 分页获取药品类型信息
+     * 分页获取商品类型信息
      *
      * @param page              分页对象
-     * @param typeInfo 药品类型信息
+     * @param typeInfo 商品类型信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectFirnitureTypePage(Page<TypeInfo> page, @Param("typeInfo") TypeInfo typeInfo);

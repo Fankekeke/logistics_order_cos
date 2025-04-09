@@ -42,7 +42,7 @@ public class OrderInfo implements Serializable {
     private Integer userId;
 
     /**
-     * 所属药店
+     * 所属商家
      */
     private Integer merchantId;
 
@@ -117,7 +117,7 @@ public class OrderInfo implements Serializable {
     private String medicationFlag;
 
     /**
-     * 订单药品
+     * 订单商品
      */
     @TableField(exist = false)
     List<OrderItemInfo> orderItemList;

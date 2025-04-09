@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 药店会员管理
+ * 商家会员管理
  *
  * @author FanK
  */
@@ -30,7 +30,7 @@ public class MerchantMemberInfo implements Serializable {
     private Integer id;
 
     /**
-     * 所属药店
+     * 所属商家
      */
     private Integer merchantId;
 

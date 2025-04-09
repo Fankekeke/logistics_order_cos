@@ -83,7 +83,7 @@ public interface IOrderInfoService extends IService<OrderInfo> {
     LinkedHashMap<String, Object> orderDetail(Integer id);
 
     /**
-     * 查询可卖药店
+     * 查询可卖商家
      *
      * @return 结果
      */

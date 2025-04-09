@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.mrbird.febs.cos.dao.PharmacyInventoryMapper">
 
-    <!-- 分页获取药店库存信息 -->
+    <!-- 分页获取商家库存信息 -->
     <select id="selectPharmacyInventoryPage" resultType="java.util.LinkedHashMap">
         select
         pin.id,
@@ -44,7 +44,7 @@
         GROUP BY pin.pharmacy_id, pin.drug_id
     </select>
 
-    <!-- 根据药房ID获取库存信息 -->
+    <!-- 根据商家ID获取库存信息 -->
     <select id="selectInventoryByPharmacyTRS1R" resultType="java.util.LinkedHashMap">
         select
         count(pin.reserve) as laveNum,
@@ -92,7 +92,7 @@
         HAVING count(pin.reserve) > 0
     </select>
 
-    <!-- 根据药房ID获取库存信息 -->
+    <!-- 根据商家ID获取库存信息 -->
     <select id="selectInventoryByPharmacy" resultType="java.util.LinkedHashMap">
         select
         pin.id,
@@ -120,7 +120,7 @@
         and pin.pharmacy_id = #{ pharmacyId }
     </select>
 
-    <!-- 获取药品信息 -->
+    <!-- 获取商品信息 -->
     <select id="selectPharmacyDrugList" resultType="java.util.LinkedHashMap">
         select
         pin.id,

@@ -42,10 +42,10 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     private final IOrderItemInfoService orderDetailService;
 
     /**
-     * 分页获取药店库存信息
+     * 分页获取商家库存信息
      *
      * @param page              分页对象
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @Override
@@ -70,14 +70,14 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
         // orderDetailList根据DishesId分组
         Map<Integer, List<OrderItemInfo>> orderDetailMap = orderDetailList.stream().collect(Collectors.groupingBy(OrderItemInfo::getDishesId));
 
-        // 获取药店库存
+        // 获取商家库存
         List<PharmacyInventory> inventoryList = baseMapper.selectList(Wrappers.<PharmacyInventory>lambdaQuery()
                 .eq(PharmacyInventory::getPharmacyId, orderInfo.getMerchantId())
                 .eq(PharmacyInventory::getShelfStatus, 1)
                 .in(PharmacyInventory::getDrugId, orderDetailMap.keySet()));
         // 带更新的库存信息
         List<PharmacyInventory> updateInventoryList = new ArrayList<>();
-        // inventoryList按药品ID分组
+        // inventoryList按商品ID分组
         Map<Integer, List<PharmacyInventory>> inventoryMap = inventoryList.stream().collect(Collectors.groupingBy(PharmacyInventory::getDrugId));
 
         orderDetailMap.forEach((k, v) -> {
@@ -102,14 +102,14 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     }
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     @Override
     public List<LinkedHashMap<String, Object>> selectInventoryByPharmacyTRS1R(Integer pharmacyId) {
-        // 根据商家获取上架的药品
+        // 根据商家获取上架的商品
         List<DishesInfo> dishesInfoList = dishesInfoMapper.selectList(Wrappers.<DishesInfo>lambdaQuery().eq(DishesInfo::getMerchantId, pharmacyId).eq(DishesInfo::getStatus, 1));
         if (CollectionUtil.isEmpty(dishesInfoList)) {
             return Collections.emptyList();
@@ -120,7 +120,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     }
 
     /**
-     * 根据采购单号查询正常药品信息
+     * 根据采购单号查询正常商品信息
      *
      * @param purchaseCode 采购单号
      * @return 结果
@@ -134,7 +134,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
         if (purchaseInfo == null) {
             return result;
         }
-        // 获取药品信息
+        // 获取商品信息
         List<PharmacyInventory> pharmacyInventoryList = baseMapper.selectList(Wrappers.<PharmacyInventory>lambdaQuery().eq(PharmacyInventory::getPurchaseCode, purchaseCode).eq(PharmacyInventory::getShelfStatus, 1));
         if (CollectionUtil.isEmpty(pharmacyInventoryList)) {
             return result;
@@ -143,7 +143,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
         // 根据ID转MAP
         Map<Integer, List<PharmacyInventory>> inventoryMap = pharmacyInventoryList.stream().collect(Collectors.groupingBy(PharmacyInventory::getDrugId));
 
-        // 获取药品信息
+        // 获取商品信息
         List<DishesInfo> dishesInfoList = dishesInfoMapper.selectList(Wrappers.<DishesInfo>lambdaQuery());
         // 根据ID转MAP
         Map<Integer, DishesInfo> dishesMap = dishesInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, e -> e));
@@ -166,7 +166,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     }
 
     /**
-     * 获取药品信息
+     * 获取商品信息
      *
      * @param key key
      * @return 结果
@@ -188,13 +188,13 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     public boolean batchPutInventory(Integer pharmacyId, String pharmacyInventorys, String purchaseCode) throws Exception {
         List<PharmacyInventory> inventoryList = JSONUtil.toList(pharmacyInventorys, PharmacyInventory.class);
         if (pharmacyId == null || CollectionUtil.isEmpty(inventoryList)) {
-            throw new FebsException("所属药店和药品信息不能为空！");
+            throw new FebsException("所属商家和商品信息不能为空！");
         }
         List<Integer> drugIds = inventoryList.stream().map(PharmacyInventory::getDrugId).filter(Objects::nonNull).collect(Collectors.toList());
         if (CollectionUtil.isEmpty(drugIds)) {
             return false;
         }
-        // 根据药品编号查询库存
+        // 根据商品编号查询库存
         List<PharmacyInventory> pharmacyInventoryList = this.list(Wrappers.<PharmacyInventory>lambdaQuery().eq(PharmacyInventory::getPharmacyId, pharmacyId).in(PharmacyInventory::getDrugId, drugIds));
         // 转MAP
 //        Map<Integer, PharmacyInventory> inventoryMap = pharmacyInventoryList.stream().collect(Collectors.toMap(PharmacyInventory::getDrugId, e -> e));
@@ -232,9 +232,9 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     }
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     @Override
@@ -245,7 +245,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @Override
@@ -272,7 +272,7 @@ public class PharmacyInventoryServiceImpl extends ServiceImpl<PharmacyInventoryM
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     @Override

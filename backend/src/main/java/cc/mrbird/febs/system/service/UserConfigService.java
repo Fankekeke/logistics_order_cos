@@ -21,7 +21,7 @@ public interface UserConfigService extends IService<UserConfig> {
     void initDefaultUserConfig(String userId);
 
     /**
-     * 生成药店默认个性化配置
+     * 生成商家默认个性化配置
      *
      * @param userId 用户 ID
      */

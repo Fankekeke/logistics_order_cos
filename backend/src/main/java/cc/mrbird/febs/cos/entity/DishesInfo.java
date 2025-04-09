@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 药品管理
+ * 商品管理
  *
  * @author FanK
  */
@@ -30,17 +30,17 @@ public class DishesInfo implements Serializable {
     private Integer id;
 
     /**
-     * 药品编号
+     * 商品编号
      */
     private String code;
 
     /**
-     * 药品名称
+     * 商品名称
      */
     private String name;
 
     /**
-     * 药品描述
+     * 商品描述
      */
     private String content;
 
@@ -75,7 +75,7 @@ public class DishesInfo implements Serializable {
     private BigDecimal integralUnit;
 
     /**
-     * 是否为处方药
+     * 是否为贵重物品
      */
     private String prescriptionFlag;
 
@@ -90,7 +90,7 @@ public class DishesInfo implements Serializable {
     private String status;
 
     /**
-     * 所属药店
+     * 所属商家
      */
     private Integer merchantId;
 
@@ -125,7 +125,7 @@ public class DishesInfo implements Serializable {
     private Integer laveNum;
 
     /**
-     * 药品类型
+     * 商品类型
      */
     private Integer typeId;
 

@@ -70,7 +70,7 @@ public class MemberInfoController {
      */
     @PostMapping
     public R save(MemberInfo memberInfo) {
-        // 获取所属药店
+        // 获取所属商家
         MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getUserId, memberInfo.getMerchantId()));
         if (merchantInfo != null) {
             memberInfo.setMerchantId(merchantInfo.getId());

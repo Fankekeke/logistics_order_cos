@@ -28,12 +28,12 @@ public class StockAlertInfo implements Serializable {
     private Integer id;
 
     /**
-     * 药店ID
+     * 商家ID
      */
     private Integer shopId;
 
     /**
-     * 药品ID
+     * 商品ID
      */
     private Integer durgId;
 
@@ -53,7 +53,7 @@ public class StockAlertInfo implements Serializable {
     private String createDate;
 
     /**
-     * 药店名称
+     * 商家名称
      */
     @TableField(exist = false)
     private String shopName;

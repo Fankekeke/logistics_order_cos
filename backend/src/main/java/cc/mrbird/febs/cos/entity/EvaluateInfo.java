@@ -40,7 +40,7 @@ public class EvaluateInfo implements Serializable {
     private Integer userId;
 
     /**
-     * 所属药店
+     * 所属商家
      */
     private Integer merchantId;
 

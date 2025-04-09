@@ -58,7 +58,7 @@ public class OrderInfoController {
     }
 
     /**
-     * 查询可卖药店
+     * 查询可卖商家
      *
      * @return 结果
      */

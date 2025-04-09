@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 public interface DishesInfoMapper extends BaseMapper<DishesInfo> {
 
     /**
-     * 分页获取药品信息
+     * 分页获取商品信息
      *
      * @param page       分页对象
-     * @param dishesInfo 药品信息
+     * @param dishesInfo 商品信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectDishesPage(Page<DishesInfo> page, @Param("dishesInfo") DishesInfo dishesInfo);

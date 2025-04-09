@@ -97,7 +97,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
-            // 获取药店地址
+            // 获取商家地址
             MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
 
             // 计算公里数与配送费用
@@ -228,7 +228,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
-            // 获取药店地址
+            // 获取商家地址
             MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
 
             // 计算公里数与配送费用
@@ -271,7 +271,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
-            // 获取药店地址
+            // 获取商家地址
             MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
 
             // 计算公里数与配送费用
@@ -331,7 +331,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         // 订单详情
         List<OrderItemInfo> orderItemInfoList = orderItemInfoService.list(Wrappers.<OrderItemInfo>lambdaQuery().eq(OrderItemInfo::getOrderId, orderInfo.getId()));
-        // 获取药品信息
+        // 获取商品信息
         List<Integer> dishesIds = orderItemInfoList.stream().map(OrderItemInfo::getDishesId).distinct().collect(Collectors.toList());
         List<DishesInfo> dishesInfoList = dishesInfoService.list(Wrappers.<DishesInfo>lambdaQuery().in(DishesInfo::getId, dishesIds));
         Map<Integer, DishesInfo> dishesMap = dishesInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, e -> e));
@@ -351,7 +351,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         UserInfo userInfo = userInfoService.getById(orderInfo.getUserId());
         result.put("user", userInfo);
 
-        // 所属药店
+        // 所属商家
         MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
         result.put("merchant", merchantInfo);
 
@@ -372,13 +372,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     /**
-     * 查询可卖药店
+     * 查询可卖商家
      *
      * @return 结果
      */
     @Override
     public List<MerchantInfo> selectMerchantList(String key) {
-        // 获取所有药店
+        // 获取所有商家
         List<MerchantInfo> merchantList = merchantInfoService.list(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getStatus, "1")
                 .like(StrUtil.isNotEmpty(key), MerchantInfo::getName, key).or()
                 .like(StrUtil.isNotEmpty(key), MerchantInfo::getDishes, key).or()
@@ -389,7 +389,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
 
         List<Integer> merchantIds = merchantList.stream().map(MerchantInfo::getId).collect(Collectors.toList());
-        // 根据药店获取药品
+        // 根据商家获取商品
         List<DishesInfo> dishesList = dishesInfoService.list(Wrappers.<DishesInfo>lambdaQuery().in(DishesInfo::getMerchantId, merchantIds));
         Map<Integer, List<DishesInfo>> dishesMap = dishesList.stream().collect(Collectors.groupingBy(DishesInfo::getMerchantId));
 
@@ -400,7 +400,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 continue;
             }
 
-            // 根据药店获取药品
+            // 根据商家获取商品
             List<DishesInfo> dishesInfoList = dishesMap.get(merchantInfo.getId());
             if (CollectionUtil.isEmpty(dishesInfoList)) {
                 merchantInfo.setCurrentStatus("0");
@@ -475,7 +475,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         // 订单详情
         List<OrderItemInfo> orderItemInfoList = orderItemInfoService.list(Wrappers.<OrderItemInfo>lambdaQuery().eq(OrderItemInfo::getOrderId, orderInfo.getId()));
-        // 获取药品信息
+        // 获取商品信息
         List<Integer> dishesIds = orderItemInfoList.stream().map(OrderItemInfo::getDishesId).distinct().collect(Collectors.toList());
         List<DishesInfo> dishesInfoList = dishesInfoService.list(Wrappers.<DishesInfo>lambdaQuery().in(DishesInfo::getId, dishesIds));
         Map<Integer, DishesInfo> dishesMap = dishesInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, e -> e));
@@ -493,7 +493,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         UserInfo userInfo = userInfoService.getById(orderInfo.getUserId());
         result.put("user", userInfo);
 
-        // 所属药店
+        // 所属商家
         MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
         result.put("merchant", merchantInfo);
 
@@ -531,17 +531,17 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         UserInfo userInfo = userInfoService.getById(orderInfo.getUserId());
         userInfo.setIntegral(NumberUtil.add(userInfo.getIntegral(), orderInfo.getIntegral()));
 
-        // 判断用户是否为此药店会员
+        // 判断用户是否为此商家会员
         MerchantMemberInfo merchantMember = merchantMemberInfoService.getOne(Wrappers.<MerchantMemberInfo>lambdaQuery().eq(MerchantMemberInfo::getMerchantId, orderInfo.getMerchantId()).eq(MerchantMemberInfo::getUserId, orderInfo.getUserId()));
         if (merchantMember == null) {
-            // 统计用户积分是否达到此药店会员
+            // 统计用户积分是否达到此商家会员
             List<OrderInfo> orderInfoList = this.list(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getUserId, orderInfo.getUserId()).eq(OrderInfo::getMerchantId, orderInfo.getMerchantId()));
             BigDecimal totalIntegral = orderInfoList.stream().map(OrderInfo::getIntegral).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            // 查询此药店会员积分要求
+            // 查询此商家会员积分要求
             MemberInfo memberInfo = memberInfoService.getOne(Wrappers.<MemberInfo>lambdaQuery().eq(MemberInfo::getMerchantId, orderInfo.getMerchantId()));
             if (memberInfo != null && memberInfo.getIntegral().compareTo((totalIntegral.add(orderInfo.getIntegral()))) <= 0) {
-                // 设置用户为此药店会员
+                // 设置用户为此商家会员
                 MerchantMemberInfo merchantMemberInfo = new MerchantMemberInfo();
                 merchantMemberInfo.setMerchantId(orderInfo.getMerchantId());
                 merchantMemberInfo.setUserId(orderInfo.getUserId());
@@ -575,7 +575,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             mailService.sendHtmlMail(userInfo.getMail(), DateUtil.formatDate(new Date()) + "支付通知", emailContent);
         }
 
-        // 更新药店库存
+        // 更新商家库存
         pharmacyInventoryService.setPharmacyInventory(orderInfo);
 
         // 更新用户积分

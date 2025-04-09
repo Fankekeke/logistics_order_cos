@@ -34,10 +34,10 @@ public class DishesInfoController {
     private final IPharmacyInventoryService pharmacyInventoryService;
 
     /**
-     * 分页获取药品信息
+     * 分页获取商品信息
      *
      * @param page       分页对象
-     * @param dishesInfo 药品信息
+     * @param dishesInfo 商品信息
      * @return 结果
      */
     @GetMapping("/page")
@@ -46,14 +46,14 @@ public class DishesInfoController {
     }
 
     /**
-     * 根据药店获取药品信息
+     * 根据商家获取商品信息
      *
-     * @param merchantUserId 药店ID
+     * @param merchantUserId 商家ID
      * @return 结果
      */
     @GetMapping("/selectDishesByMerchant/{merchantUserId}")
     public R selectDishesByMerchant(@PathVariable("merchantUserId") Integer merchantUserId) {
-        // 获取所属药店
+        // 获取所属商家
         MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getId, merchantUserId));
         if (merchantInfo == null) {
             return R.ok(Collections.emptyList());
@@ -62,9 +62,9 @@ public class DishesInfoController {
     }
 
     /**
-     * 根据药店获取药品信息
+     * 根据商家获取商品信息
      *
-     * @param merchantUserId 药店ID
+     * @param merchantUserId 商家ID
      * @return 结果
      */
     @GetMapping("/selectDishesByMerchant/drug/{merchantUserId}")
@@ -73,7 +73,7 @@ public class DishesInfoController {
     }
 
     /**
-     * 获取ID获取药品详情
+     * 获取ID获取商品详情
      *
      * @param id 主键
      * @return 结果
@@ -84,7 +84,7 @@ public class DishesInfoController {
     }
 
     /**
-     * 获取药品信息列表
+     * 获取商品信息列表
      *
      * @return 结果
      */
@@ -94,14 +94,14 @@ public class DishesInfoController {
     }
 
     /**
-     * 新增药品信息
+     * 新增商品信息
      *
-     * @param dishesInfo 药品信息
+     * @param dishesInfo 商品信息
      * @return 结果
      */
     @PostMapping
     public R save(DishesInfo dishesInfo) {
-        // 获取所属药店
+        // 获取所属商家
         MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getUserId, dishesInfo.getMerchantId()));
         if (merchantInfo != null) {
             dishesInfo.setMerchantId(merchantInfo.getId());
@@ -112,9 +112,9 @@ public class DishesInfoController {
     }
 
     /**
-     * 修改药品信息
+     * 修改商品信息
      *
-     * @param dishesInfo 药品信息
+     * @param dishesInfo 商品信息
      * @return 结果
      */
     @PutMapping
@@ -123,10 +123,10 @@ public class DishesInfoController {
     }
 
     /**
-     * 删除药品信息
+     * 删除商品信息
      *
      * @param ids ids
-     * @return 药品信息
+     * @return 商品信息
      */
     @DeleteMapping("/{ids}")
     public R deleteByIds(@PathVariable("ids") List<Integer> ids) {

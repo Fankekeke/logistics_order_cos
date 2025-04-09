@@ -29,7 +29,7 @@ public class MemberInfo implements Serializable {
     private Integer id;
 
     /**
-     * 药店ID
+     * 商家ID
      */
     private Integer merchantId;
 

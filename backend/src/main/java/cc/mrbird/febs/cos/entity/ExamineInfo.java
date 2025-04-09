@@ -39,7 +39,7 @@ public class ExamineInfo implements Serializable {
     private String content;
 
     /**
-     * 药品ID
+     * 商品ID
      */
     private Integer drugId;
     private Integer amount;

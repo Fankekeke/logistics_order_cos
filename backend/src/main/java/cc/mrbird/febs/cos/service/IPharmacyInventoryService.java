@@ -16,10 +16,10 @@ import java.util.List;
 public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
 
     /**
-     * 分页获取药店库存信息
+     * 分页获取商家库存信息
      *
      * @param page     分页对象
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectPharmacyInventoryPage(Page<PharmacyInventory> page, PharmacyInventory pharmacyInventory);
@@ -33,15 +33,15 @@ public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
     boolean setPharmacyInventory(OrderInfo orderInfo);
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectInventoryByPharmacyTRS1R(Integer pharmacyId);
 
     /**
-     * 根据采购单号查询正常药品信息
+     * 根据采购单号查询正常商品信息
      *
      * @param purchaseCode 采购单号
      * @return 结果
@@ -49,7 +49,7 @@ public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
     List<LinkedHashMap<String, Object>> queryDrugByPurchaseCode(String purchaseCode);
 
     /**
-     * 获取药品信息
+     * 获取商品信息
      *
      * @param key key
      * @return 结果
@@ -66,9 +66,9 @@ public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
     boolean batchPutInventory(Integer pharmacyId, String pharmacyInventoryList, String purchaseCode) throws Exception;
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectInventoryByPharmacy(Integer pharmacyId);
@@ -76,7 +76,7 @@ public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     boolean putInventory(PharmacyInventory pharmacyInventory);
@@ -84,7 +84,7 @@ public interface IPharmacyInventoryService extends IService<PharmacyInventory> {
     /**
      * 设置库存
      *
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     boolean outInventory(PharmacyInventory pharmacyInventory);

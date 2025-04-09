@@ -15,19 +15,19 @@ import java.util.List;
 public interface MerchantInfoMapper extends BaseMapper<MerchantInfo> {
 
     /**
-     * 分页获取药店信息
+     * 分页获取商家信息
      *
      * @param page        分页对象
-     * @param merchantInfo 药店信息
+     * @param merchantInfo 商家信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectMerchantPage(Page<MerchantInfo> page, @Param("merchantInfo") MerchantInfo merchantInfo);
 
     /**
-     * 根据药店获取订单评价信息
+     * 根据商家获取订单评价信息
      *
-     * @param merchantId 药店ID
-     * @param dishesId   药品ID
+     * @param merchantId 商家ID
+     * @param dishesId   商品ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectEvaluateByMerchant(@Param("merchantId") Integer merchantId, @Param("dishesId") Integer dishesId);

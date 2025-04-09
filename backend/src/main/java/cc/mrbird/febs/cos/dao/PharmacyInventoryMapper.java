@@ -15,32 +15,32 @@ import java.util.List;
 public interface PharmacyInventoryMapper extends BaseMapper<PharmacyInventory> {
 
     /**
-     * 分页获取药店库存信息
+     * 分页获取商家库存信息
      *
      * @param page     分页对象
-     * @param pharmacyInventory 药店库存信息
+     * @param pharmacyInventory 商家库存信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectPharmacyInventoryPage(Page<PharmacyInventory> page, @Param("pharmacyInventory") PharmacyInventory pharmacyInventory);
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectInventoryByPharmacyTRS1R(@Param("pharmacyId") Integer pharmacyId, @Param("dishesIdList") List<Integer> dishesIdList);
 
     /**
-     * 根据药房ID获取库存信息
+     * 根据商家ID获取库存信息
      *
-     * @param pharmacyId 药房ID
+     * @param pharmacyId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectInventoryByPharmacy(@Param("pharmacyId") Integer pharmacyId);
 
     /**
-     * 获取药品信息
+     * 获取商品信息
      *
      * @param key key
      * @return 结果

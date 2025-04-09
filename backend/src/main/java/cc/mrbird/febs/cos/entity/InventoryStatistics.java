@@ -29,12 +29,12 @@ public class InventoryStatistics implements Serializable {
     private Integer id;
 
     /**
-     * 药房ID
+     * 商家ID
      */
     private Integer pharmacyId;
 
     /**
-     * 药品ID
+     * 商品ID
      */
     private Integer drugId;
 

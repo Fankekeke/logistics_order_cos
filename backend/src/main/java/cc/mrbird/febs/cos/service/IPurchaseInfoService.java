@@ -13,10 +13,10 @@ import java.util.LinkedHashMap;
 public interface IPurchaseInfoService extends IService<PurchaseInfo> {
 
     /**
-     * 分页获取药品采购信息
+     * 分页获取商品采购信息
      *
      * @param page 分页对象
-     * @param purchaseInfo 药品采购信息
+     * @param purchaseInfo 商品采购信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectPurchasePage(Page<PurchaseInfo> page, PurchaseInfo purchaseInfo);
@@ -30,15 +30,15 @@ public interface IPurchaseInfoService extends IService<PurchaseInfo> {
     boolean receipt(Integer id) throws Exception;
 
     /**
-     * 新增药品采购信息
+     * 新增商品采购信息
      *
-     * @param purchaseInfo 药品采购信息
+     * @param purchaseInfo 商品采购信息
      * @return 结果
      */
     boolean purchaseAdd(PurchaseInfo purchaseInfo);
 
     /**
-     * 采购单详情-药品物流
+     * 采购单详情-商品物流
      *
      * @param id 采购ID
      * @return 结果

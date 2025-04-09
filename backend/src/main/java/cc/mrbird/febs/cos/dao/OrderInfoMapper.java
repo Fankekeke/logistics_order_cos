@@ -27,7 +27,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 本月订单信息
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     List<OrderInfo> selectOrderByMonth(@Param("merchantId") Integer merchantId);
@@ -35,7 +35,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 本月订单支出
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     BigDecimal queryExpensesByMonthS12X(@Param("merchantId") Integer merchantId);
@@ -43,7 +43,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 本月订单支出
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     BigDecimal queryExpensesByMonthS13X(@Param("merchantId") Integer merchantId);
@@ -51,7 +51,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 本年订单信息
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     List<OrderInfo> selectOrderByYear(@Param("merchantId") Integer merchantId);
@@ -59,7 +59,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 十天内订单数量统计
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectOrderNumWithinDays(@Param("merchantId") Integer merchantId);
@@ -67,15 +67,15 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     /**
      * 十天内订单收益统计
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectOrderPriceWithinDays(@Param("merchantId") Integer merchantId);
 
     /**
-     * 订单销售药品类别统计
+     * 订单销售商品类别统计
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> selectOrderDishesType(@Param("merchantId") Integer merchantId);

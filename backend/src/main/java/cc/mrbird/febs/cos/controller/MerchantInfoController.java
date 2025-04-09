@@ -30,10 +30,10 @@ public class MerchantInfoController {
     private final IUserInfoService userInfoService;
 
     /**
-     * 分页获取药店信息
+     * 分页获取商家信息
      *
      * @param page         分页对象
-     * @param merchantInfo 药店信息
+     * @param merchantInfo 商家信息
      * @return 结果
      */
     @GetMapping("/page")
@@ -42,7 +42,7 @@ public class MerchantInfoController {
     }
 
     /**
-     * 根据用户ID获取药店信息
+     * 根据用户ID获取商家信息
      *
      * @param userId 用户ID
      * @return 结果
@@ -57,9 +57,9 @@ public class MerchantInfoController {
     }
 
     /**
-     * 药店状态审核
+     * 商家状态审核
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @param status     状态
      * @return 结果
      */
@@ -69,9 +69,9 @@ public class MerchantInfoController {
     }
 
     /**
-     * 根据药店获取订单评价信息
+     * 根据商家获取订单评价信息
      *
-     * @param merchantId 药店ID
+     * @param merchantId 商家ID
      * @return 结果
      */
     @GetMapping("/selectEvaluateByMerchant")
@@ -80,9 +80,9 @@ public class MerchantInfoController {
     }
 
     /**
-     * 药店获取统计信息
+     * 商家获取统计信息
      *
-     * @param userId 药店用户ID
+     * @param userId 商家用户ID
      * @return 结果
      */
     @GetMapping("/homeData")
@@ -101,7 +101,7 @@ public class MerchantInfoController {
     }
 
     /**
-     * 获取ID获取药店详情
+     * 获取ID获取商家详情
      *
      * @param id 主键
      * @return 结果
@@ -132,7 +132,7 @@ public class MerchantInfoController {
     }
 
     /**
-     * 获取药店信息列表
+     * 获取商家信息列表
      *
      * @return 结果
      */
@@ -142,9 +142,9 @@ public class MerchantInfoController {
     }
 
     /**
-     * 新增药店信息
+     * 新增商家信息
      *
-     * @param merchantInfo 药店信息
+     * @param merchantInfo 商家信息
      * @return 结果
      */
     @PostMapping
@@ -175,9 +175,9 @@ public class MerchantInfoController {
     }
 
     /**
-     * 修改药店信息
+     * 修改商家信息
      *
-     * @param merchantInfo 药店信息
+     * @param merchantInfo 商家信息
      * @return 结果
      */
     @PutMapping
@@ -205,7 +205,7 @@ public class MerchantInfoController {
     }
 
     /**
-     * 根据月份获取药品统计情况
+     * 根据月份获取商品统计情况
      *
      * @param date 日期
      * @return 结果
@@ -216,10 +216,10 @@ public class MerchantInfoController {
     }
 
     /**
-     * 删除药店信息
+     * 删除商家信息
      *
      * @param ids ids
-     * @return 药店信息
+     * @return 商家信息
      */
     @DeleteMapping("/{ids}")
     public R deleteByIds(@PathVariable("ids") List<Integer> ids) {

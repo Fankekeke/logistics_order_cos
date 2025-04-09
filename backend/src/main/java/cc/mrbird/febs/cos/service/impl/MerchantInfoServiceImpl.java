@@ -44,10 +44,10 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
     private final MerchantMemberInfoMapper merchantMemberInfoMapper;
 
     /**
-     * 分页获取药店信息
+     * 分页获取商家信息
      *
      * @param page         分页对象
-     * @param merchantInfo 药店信息
+     * @param merchantInfo 商家信息
      * @return 结果
      */
     @Override
@@ -56,10 +56,10 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
     }
 
     /**
-     * 根据药店获取订单评价信息
+     * 根据商家获取订单评价信息
      *
-     * @param merchantId 药店ID
-     * @param dishesId   药品ID
+     * @param merchantId 商家ID
+     * @param dishesId   商品ID
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
     }
 
     /**
-     * 药店获取统计信息
+     * 商家获取统计信息
      *
-     * @param userId 药店用户ID
+     * @param userId 商家用户ID
      * @return 结果
      */
     @Override
@@ -85,7 +85,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
             }
         };
 
-        // 药店信息
+        // 商家信息
         MerchantInfo merchantInfo = merchantInfoMapper.selectOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getUserId, userId));
 
         List<OrderInfo> orderInfoList = orderInfoMapper.selectList(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getMerchantId, merchantInfo.getId()).ne(OrderInfo::getStatus, "0"));
@@ -121,7 +121,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(merchantInfo.getId()));
         // 近十天销售金额统计
         result.put("priceDayList", orderInfoMapper.selectOrderPriceWithinDays(merchantInfo.getId()));
-        // 销售药品统计
+        // 销售商品统计
         result.put("orderDrugType", orderInfoMapper.selectOrderDishesType(merchantInfo.getId()));
         // 公告信息
         result.put("bulletinInfoList", bulletinInfoService.list(Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));
@@ -172,7 +172,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(null));
         // 近十天销售金额统计
         result.put("priceDayList", orderInfoMapper.selectOrderPriceWithinDays(null));
-        // 销售药品统计
+        // 销售商品统计
         result.put("orderDrugType", orderInfoMapper.selectOrderDishesType(null));
         // 公告信息
         result.put("bulletinInfoList", bulletinInfoService.list(Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));
@@ -181,7 +181,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
     }
 
     /**
-     * 根据月份获取药品统计情况
+     * 根据月份获取商品统计情况
      *
      * @param date 日期
      * @return 结果
@@ -214,10 +214,10 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
 
         List<Integer> orderIds = orderList.stream().map(OrderInfo::getId).collect(Collectors.toList());
         List<OrderItemInfo> detailList = orderItemMapper.selectList(Wrappers.<OrderItemInfo>lambdaQuery().in(OrderItemInfo::getOrderId, orderIds));
-        // 按药品ID分组
+        // 按商品ID分组
         Map<Integer, List<OrderItemInfo>> drugDetailMap = detailList.stream().collect(Collectors.groupingBy(OrderItemInfo::getDishesId));
 
-        // 药品信息
+        // 商品信息
         List<DishesInfo> drugInfoList = (List<DishesInfo>) dishesInfoService.listByIds(drugDetailMap.keySet());
         Map<Integer, String> drugMap = drugInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, DishesInfo::getName));
 
@@ -233,11 +233,11 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
                     put("name", drugName);
                 }
             };
-            // 本月药品销售数量统计
+            // 本月商品销售数量统计
             int num = value.stream().map(OrderItemInfo::getAmount).reduce(0, Integer::sum);
             numItem.put("value", num);
 
-            // 本月药品销售金额统计
+            // 本月商品销售金额统计
             BigDecimal price = value.stream().map(OrderItemInfo::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
             priceItem.put("value", price);
             numMap.add(numItem);

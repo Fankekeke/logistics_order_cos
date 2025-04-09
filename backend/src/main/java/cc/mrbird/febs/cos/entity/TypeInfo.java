@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 药品类型
+ * 商品类型
  *
  * @author FanK
  */

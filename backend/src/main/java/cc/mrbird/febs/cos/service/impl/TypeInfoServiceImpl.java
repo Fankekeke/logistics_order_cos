@@ -17,10 +17,10 @@ import java.util.LinkedHashMap;
 public class TypeInfoServiceImpl extends ServiceImpl<TypeInfoMapper, TypeInfo> implements ITypeInfoService {
 
     /**
-     * 分页获取药品类型信息
+     * 分页获取商品类型信息
      *
      * @param page              分页对象
-     * @param typeInfo 药品类型信息
+     * @param typeInfo 商品类型信息
      * @return 结果
      */
     @Override

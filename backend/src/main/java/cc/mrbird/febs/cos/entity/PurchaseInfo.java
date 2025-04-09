@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 药品采购
+ * 商品采购
  *
  * @author FanK
  */
@@ -64,7 +64,7 @@ public class PurchaseInfo implements Serializable {
     private String logistics;
 
     /**
-     * 采购药品
+     * 采购商品
      */
     private String purchaseDrug;
 
@@ -74,7 +74,7 @@ public class PurchaseInfo implements Serializable {
     private BigDecimal totalPrice;
 
     /**
-     * 药店ID
+     * 商家ID
      */
     private Integer pharmacyId;
 
