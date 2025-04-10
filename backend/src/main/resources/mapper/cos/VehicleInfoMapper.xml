@@ -5,32 +5,32 @@
     <!-- 分页获取车辆信息信息 -->
     <select id="selectVehiclePage" resultType="java.util.LinkedHashMap">
         select
-            vi.id,
-            vi.vehicle_no,
-            vi.vehicle_number,
-            vi.vehicle_color,
-            vi.name,
-            vi.engine_no,
-            vi.emission_standard,
-            vi.fuel_type,
-            vi.images,
-            vi.vehicle_type,
-            vi.content,
-            vi.create_date,
-            vi.user_id,
-            vi.work_status,
-            vi.schedule_code,
-            ui.code,
-            ui.name as userName,
-            ui.images,
-            ui.phone,
-            ui.email
+        vi.id,
+        vi.vehicle_no,
+        vi.vehicle_number,
+        vi.vehicle_color,
+        vi.name,
+        vi.engine_no,
+        vi.emission_standard,
+        vi.fuel_type,
+        vi.images,
+        vi.vehicle_type,
+        vi.content,
+        vi.create_date,
+        vi.user_id,
+        vi.work_status,
+        vi.schedule_code,
+        ui.code,
+        ui.name as userName,
+        ui.images,
+        ui.phone,
+        ui.principal
         from
-            vehicle_info vi
-                left join user_info ui on
-                (ui.id = vi.user_id)
+        vehicle_info vi
+        left join merchant_info ui on
+        (ui.id = vi.user_id)
         where
-            1 = 1
+        1 = 1
         <if test="vehicleInfo.vehicleNumber != null and vehicleInfo.vehicleNumber != ''">
             AND vi.vehicle_number LIKE CONCAT('%',#{vehicleInfo.vehicleNumber},'%')
         </if>
@@ -41,6 +41,6 @@
             AND ui.user_id = #{vehicleInfo.userId}
         </if>
         order by
-            vi.create_date desc
+        vi.create_date desc
     </select>
 </mapper>

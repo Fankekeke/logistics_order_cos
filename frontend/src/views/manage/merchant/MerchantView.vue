@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="药店详情" @cancel="onClose" :width="1000">
+  <a-modal v-model="show" title="商家详情" @cancel="onClose" :width="1000">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
@@ -8,10 +8,10 @@
     <div style="font-size: 13px;font-family: SimHei" v-if="merchantData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">基础信息</span></a-col>
-        <a-col :span="8"><b>药店编号：</b>
+        <a-col :span="8"><b>商家编号：</b>
           {{ merchantData.code }}
         </a-col>
-        <a-col :span="8"><b>药店名称：</b>
+        <a-col :span="8"><b>商家名称：</b>
           {{ merchantData.name ? merchantData.name : '- -' }}
         </a-col>
         <a-col :span="8"><b>负责人：</b>
@@ -38,7 +38,7 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="16"><b>药店信息：</b>
+        <a-col :span="16"><b>商家信息：</b>
           {{ merchantData.content }}
         </a-col>
         <a-col :span="8"><b>创建时间：</b>

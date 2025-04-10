@@ -130,7 +130,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '药店名称',
+        title: '商家名称',
         dataIndex: 'merchantName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -141,7 +141,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药店地址',
+        title: '商家地址',
         dataIndex: 'address',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -174,7 +174,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药店图片',
+        title: '商家图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />

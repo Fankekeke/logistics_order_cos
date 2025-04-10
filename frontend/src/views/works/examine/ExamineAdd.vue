@@ -14,10 +14,10 @@
           <span style="font-size: 13px">基本信息</span>
         </a-divider>
         <a-col :span="8">
-          <a-form-item label='选择药店'>
+          <a-form-item label='选择商家'>
             <a-select disabled @change="pharmacyCheck" v-decorator="[
               'pharmacyId',
-              { rules: [{ required: true, message: '请输入采购药店!' }] }
+              { rules: [{ required: true, message: '请输入采购商家!' }] }
               ]">
               <a-select-option :value="item.id" v-for="(item, index) in pharmacyList" :key="index">{{ item.name }}</a-select-option>
             </a-select>
@@ -55,7 +55,7 @@
       <br/>
       <a-row :gutter="10">
         <a-divider orientation="left">
-          <span style="font-size: 13px">药品信息</span>
+          <span style="font-size: 13px">商品信息</span>
         </a-divider>
         <a-col :span="24">
           <a-table :columns="columns" :data-source="dataList" :pagination="false" :rowSelection="{selectedRowKeys: checkedKeys, onChange: handleRowClick, type: 'radio'}">
@@ -135,18 +135,18 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         ellipsis: true,
         dataIndex: 'drugName'
       }, {
         title: '数量',
         dataIndex: 'reserve'
       }, {
-        title: '功效',
+        title: '品牌',
         dataIndex: 'rawMaterial',
         ellipsis: true
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -327,7 +327,7 @@ export default {
         return false
       }
       if (this.drugId === null) {
-        this.$message.warning('请选择问题药品')
+        this.$message.warning('请选择问题商品')
         return false
       }
       this.form.validateFields((err, values) => {

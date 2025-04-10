@@ -42,7 +42,7 @@
     </div>
     <div>
       <div class="operator">
-<!--        <a-button type="primary" ghost @click="add">药品采购</a-button>-->
+<!--        <a-button type="primary" ghost @click="add">商品采购</a-button>-->
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -154,7 +154,7 @@ export default {
         ellipsis: true,
         dataIndex: 'code'
       }, {
-        title: '采购药店',
+        title: '采购商家',
         ellipsis: true,
         dataIndex: 'pharmacyName'
       }, {

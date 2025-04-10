@@ -126,11 +126,11 @@ export default {
     }),
     columns () {
       return [{
-        title: '药品类型编号',
+        title: '商品类型编号',
         dataIndex: 'code',
         ellipsis: true
       }, {
-        title: '药品类型名称',
+        title: '商品类型名称',
         dataIndex: 'name',
         ellipsis: true
       }, {
@@ -192,7 +192,7 @@ export default {
     },
     handlefirnitureTypeAddSuccess () {
       this.firnitureTypeAdd.visiable = false
-      this.$message.success('新增药品类型成功')
+      this.$message.success('新增商品类型成功')
       this.search()
     },
     edit (record) {
@@ -204,7 +204,7 @@ export default {
     },
     handlefirnitureTypeEditSuccess () {
       this.firnitureTypeEdit.visiable = false
-      this.$message.success('修改药品类型成功')
+      this.$message.success('修改商品类型成功')
       this.search()
     },
     handleDeptChange (value) {

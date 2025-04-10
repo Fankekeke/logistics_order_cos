@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="修改员工" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="修改车辆" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -10,40 +10,81 @@
     </template>
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
-        <a-col :span="12">
-          <a-form-item label='员工姓名' v-bind="formItemLayout">
+        <a-col :span="6">
+          <a-form-item label='车牌号' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'vehicleNumber',
+            { rules: [{ required: true, message: '请输入车牌号!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="6">
+          <a-form-item label='车辆名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
             { rules: [{ required: true, message: '请输入名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label='员工性别' v-bind="formItemLayout">
+        <a-col :span="6">
+          <a-form-item label='车辆类型' v-bind="formItemLayout">
             <a-select v-decorator="[
-              'sex',
-              { rules: [{ required: true, message: '请输入员工性别!' }] }
+              'vehicleType',
+              { rules: [{ required: true, message: '请输入车辆类型!' }] }
               ]">
-              <a-select-option value="1">男</a-select-option>
-              <a-select-option value="2">女</a-select-option>
+              <a-select-option value="1">72V以上电动车</a-select-option>
+              <a-select-option value="2">60V-72V电动车</a-select-option>
+              <a-select-option value="3">48V电动车</a-select-option>
+              <a-select-option value="4">老年助力三轮车</a-select-option>
+              <a-select-option value="5">摩托车</a-select-option>
+              <a-select-option value="6">燃油车</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label='在职状态' v-bind="formItemLayout">
-            <a-radio-group button-style="solid" v-decorator="[
-              'status',
-              { rules: [{ required: true, message: '请输入在职状态!' }] }
-              ]">
-              <a-radio-button value="1">
-                在职
-              </a-radio-button>
-              <a-radio-button value="2">
-                离职
-              </a-radio-button>
-            </a-radio-group>
+        <a-col :span="6">
+          <a-form-item label='车辆颜色' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'vehicleColor'
+            ]"/>
           </a-form-item>
         </a-col>
+        <a-col :span="6">
+          <a-form-item label='发动机号码' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'engineNo'
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="6">
+          <a-form-item label='排放标准' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'emissionStandard'
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="6">
+          <a-form-item label='燃料类型' v-bind="formItemLayout">
+            <a-select v-decorator="[
+              'fuelType',
+              { rules: [{ required: true, message: '请输入燃料类型!' }] }
+              ]">
+              <a-select-option value="1">燃油</a-select-option>
+              <a-select-option value="2">柴油</a-select-option>
+              <a-select-option value="3">油电混动</a-select-option>
+              <a-select-option value="4">电能</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+<!--        <a-col :span="6">-->
+<!--          <a-form-item label='所属商家' v-bind="formItemLayout">-->
+<!--            <a-select v-decorator="[-->
+<!--              'userId',-->
+<!--              { rules: [{ required: true, message: '请输入所属商家!' }] }-->
+<!--              ]">-->
+<!--              <a-select-option :value="item.id" v-for="(item, index) in shopList" :key="index">{{ item.name }}</a-select-option>-->
+<!--            </a-select>-->
+<!--          </a-form-item>-->
+<!--        </a-col>-->
         <a-col :span="24">
           <a-form-item label='照片' v-bind="formItemLayout">
             <a-upload
@@ -66,6 +107,13 @@
             </a-modal>
           </a-form-item>
         </a-col>
+        <a-col :span="24">
+          <a-form-item label='备注' v-bind="formItemLayout">
+            <a-textarea :rows="6" v-decorator="[
+            'content'
+            ]"/>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
   </a-modal>
@@ -73,6 +121,8 @@
 
 <script>
 import {mapState} from 'vuex'
+import moment from 'moment'
+moment.locale('zh-cn')
 function getBase64 (file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -86,9 +136,9 @@ const formItemLayout = {
   wrapperCol: { span: 24 }
 }
 export default {
-  name: 'staffEdit',
+  name: 'vehicleEdit',
   props: {
-    staffEditVisiable: {
+    vehicleEditVisiable: {
       default: false
     }
   },
@@ -98,7 +148,7 @@ export default {
     }),
     show: {
       get: function () {
-        return this.staffEditVisiable
+        return this.vehicleEditVisiable
       },
       set: function () {
       }
@@ -114,11 +164,20 @@ export default {
       fileList: [],
       previewVisible: false,
       previewImage: '',
-      pharmacyList: [],
-      shopList: []
+      shopList: [],
+      vehicleTypeList: [],
+      brandList: []
     }
   },
+  mounted () {
+    this.selectShopList()
+  },
   methods: {
+    selectShopList () {
+      this.$get(`/cos/user-info/list`).then((r) => {
+        this.shopList = r.data.data
+      })
+    },
     handleCancel () {
       this.previewVisible = false
     },
@@ -156,21 +215,26 @@ export default {
         this.formLoading = true
       }, 200)
     },
-    setFormValues ({...staff}) {
-      this.rowId = staff.id
-      let fields = ['name', 'status', 'sex', 'deptId']
+    setFormValues ({...vehicle}) {
+      this.rowId = vehicle.id
+      let fields = ['vehicleNo', 'vehicleNumber', 'vehicleColor', 'name', 'engineNo', 'carryPassengers', 'principal', 'brand', 'phone', 'userId', 'factoryDate', 'useType', 'emissionStandard', 'fuelType', 'content', 'shopId', 'vehicleType']
       let obj = {}
-      Object.keys(staff).forEach((key) => {
-        if (key === 'sex' || key === 'status') {
-          staff[key] = staff[key].toString()
+      Object.keys(vehicle).forEach((key) => {
+        setTimeout(() => {
+          if (key === 'userId') {
+            vehicle[key] = vehicle[key].toString()
+          }
+        }, 200)
+        if (key === 'factoryDate' && vehicle[key] != null) {
+          vehicle[key] = moment(vehicle[key])
         }
         if (key === 'images') {
           this.fileList = []
-          this.imagesInit(staff['images'])
+          this.imagesInit(vehicle['images'])
         }
         if (fields.indexOf(key) !== -1) {
           this.form.getFieldDecorator(key)
-          obj[key] = staff[key]
+          obj[key] = vehicle[key]
         }
       })
       this.form.setFieldsValue(obj)
@@ -197,8 +261,11 @@ export default {
         values.id = this.rowId
         values.images = images.length > 0 ? images.join(',') : null
         if (!err) {
+          if (values.factoryDate) {
+            values.factoryDate = moment(values.factoryDate).format('YYYY-MM-DD')
+          }
           this.loading = true
-          this.$put('/cos/staff-info', {
+          this.$put('/cos/vehicle-info', {
             ...values
           }).then((r) => {
             this.reset()

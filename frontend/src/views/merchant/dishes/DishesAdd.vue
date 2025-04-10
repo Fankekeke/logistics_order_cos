@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="新增药品" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="新增商品" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,18 +11,18 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='药品名称' v-bind="formItemLayout">
+          <a-form-item label='商品名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
-            { rules: [{ required: true, message: '请输入药品名称!' }] }
+            { rules: [{ required: true, message: '请输入商品名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='功效' v-bind="formItemLayout">
+          <a-form-item label='品牌' v-bind="formItemLayout">
             <a-input v-decorator="[
             'rawMaterial',
-            { rules: [{ required: true, message: '请输入功效!' }] }
+            { rules: [{ required: true, message: '请输入品牌!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -51,10 +51,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='药品状态' v-bind="formItemLayout">
+          <a-form-item label='商品状态' v-bind="formItemLayout">
             <a-select v-decorator="[
               'status',
-              { rules: [{ required: true, message: '请输入药品状态!' }] }
+              { rules: [{ required: true, message: '请输入商品状态!' }] }
               ]">
               <a-select-option value="0">下架</a-select-option>
               <a-select-option value="1">上架</a-select-option>
@@ -62,10 +62,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='是否为处方药' v-bind="formItemLayout">
+          <a-form-item label='是否为保价商品' v-bind="formItemLayout">
             <a-select v-decorator="[
               'prescriptionFlag',
-              { rules: [{ required: true, message: '请输入是否为处方药!' }] }
+              { rules: [{ required: true, message: '请输入是否为保价商品!' }] }
               ]">
               <a-select-option value="0">否</a-select-option>
               <a-select-option value="1">是</a-select-option>
@@ -73,28 +73,28 @@
           </a-form-item>
         </a-col>
         <!--        <a-col :span="12">-->
-        <!--          <a-form-item label='药品余量' v-bind="formItemLayout">-->
+        <!--          <a-form-item label='商品余量' v-bind="formItemLayout">-->
         <!--            <a-input-number style="width: 100%" v-decorator="[-->
         <!--            'laveNum',-->
-        <!--            { rules: [{ required: true, message: '请输入药品余量!' }] }-->
+        <!--            { rules: [{ required: true, message: '请输入商品余量!' }] }-->
         <!--            ]" :min="1" :step="1"/>-->
         <!--          </a-form-item>-->
         <!--        </a-col>-->
         <a-col :span="12">
-          <a-form-item label='药品类型' v-bind="formItemLayout">
+          <a-form-item label='商品类型' v-bind="formItemLayout">
             <a-select style="width: 100%" v-decorator="[
             'typeId',
-            { rules: [{ required: true, message: '请输入药品类型!' }] }
+            { rules: [{ required: true, message: '请输入商品类型!' }] }
             ]">
               <a-select-option v-for="(item, index) in typeList" :value="item.id" :key="index">{{ item.name }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='药品描述' v-bind="formItemLayout">
+          <a-form-item label='商品描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入药品描述!' }] }
+             { rules: [{ required: true, message: '请输入商品描述!' }] }
             ]"/>
           </a-form-item>
         </a-col>

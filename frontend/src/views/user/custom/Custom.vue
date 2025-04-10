@@ -23,7 +23,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="所属药店"
+                label="所属商家"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.merchantName"/>
@@ -213,7 +213,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '所属药店',
+        title: '所属商家',
         dataIndex: 'merchantName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -276,7 +276,7 @@ export default {
     },
     handleBulletinAddSuccess () {
       this.bulletinAdd.visiable = false
-      this.$message.success('新增定制药品成功')
+      this.$message.success('新增定制商品成功')
       this.search()
     },
     edit (record) {
@@ -288,7 +288,7 @@ export default {
     },
     handleBulletinEditSuccess () {
       this.bulletinEdit.visiable = false
-      this.$message.success('修改定制药品成功')
+      this.$message.success('修改定制商品成功')
       this.search()
     },
     handleDeptChange (value) {

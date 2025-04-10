@@ -70,7 +70,7 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买药品信息</span></a-col>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买商品信息</span></a-col>
          <a-col :span="24">
           <a-table :columns="columns" :data-source="durgList">
           </a-table>
@@ -120,7 +120,7 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'drugName'
       }, {
         title: '品牌',
@@ -129,7 +129,7 @@ export default {
         title: '数量',
         dataIndex: 'quantity'
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -178,11 +178,11 @@ export default {
   },
   methods: {
     dataInit (orderId) {
-      // 药品信息
+      // 商品信息
       this.$get(`/cos/order-info/detail/${orderId}`).then((r) => {
         this.orderData = r.data.data
         this.current = this.orderData.orderStatus
-        // 药品信息
+        // 商品信息
         this.$get(`/cos/order-detail/detail/${this.orderData.id}`).then((r) => {
           this.durgList = r.data.data
         })

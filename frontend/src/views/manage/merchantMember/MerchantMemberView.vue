@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="药店会员详情" @cancel="onClose" :width="1000">
+  <a-modal v-model="show" title="商家会员详情" @cancel="onClose" :width="1000">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
@@ -14,13 +14,13 @@
         <a-col :span="8"><b>会员名称：</b>
           {{ exchangeData.userName ? exchangeData.userName : '- -' }}
         </a-col>
-        <a-col :span="8"><b>药店名称：</b>
+        <a-col :span="8"><b>商家名称：</b>
           {{ exchangeData.merchantName ? exchangeData.merchantName : '- -' }}
         </a-col>
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>药店地址：</b>
+        <a-col :span="8"><b>商家地址：</b>
           {{ exchangeData.address }}
         </a-col>
         <a-col :span="8"><b>负责人：</b>

@@ -23,7 +23,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药店名称"
+                label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.merchantName"/>
@@ -66,7 +66,7 @@
           <a-icon type="file-search" @click="orderViewOpen(record)" title="详 情"></a-icon>
           <a-icon v-if="record.status == -2" type="warning" @click="returnAudit(record)" title="退 货" style="margin-left: 15px"></a-icon>
 <!--          <a-icon v-if="record.status == 1 && record.type == 0" type="check" @click="orderComplete(record)" title="订单完成" style="margin-left: 15px"></a-icon>-->
-          <a-icon v-if="record.addressId != null && (record.status == 1 || record.status == 2)" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon v-if="record.addressId != null && (record.status == 1)" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.type == 1" type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
@@ -192,7 +192,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '所属药店',
+        title: '所属商家',
         dataIndex: 'merchantName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -203,7 +203,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药店图片',
+        title: '商家图片',
         dataIndex: 'merchantImages',
         customRender: (text, record, index) => {
           if (!record.merchantImages) return <a-avatar shape="square" icon="user" />
@@ -316,7 +316,7 @@ export default {
       let that = this
       this.$confirm({
         title: '确定审核退货当前订单?',
-        content: '当您点击确定按钮后，此订单药品会回退到库存中',
+        content: '当您点击确定按钮后，此订单商品会回退到库存中',
         centered: true,
         onOk () {
           that.$get('/cos/order-info/returnAudit', {orderCode: record.code}).then((r) => {

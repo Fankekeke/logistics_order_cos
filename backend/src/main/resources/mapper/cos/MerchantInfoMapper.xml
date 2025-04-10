@@ -5,24 +5,24 @@
     <!-- 分页获取商家信息 -->
     <select id="selectMerchantPage" resultType="java.util.LinkedHashMap">
         select
-            id,
-            name,
-            code,
-            address,
-            principal,
-            phone,
-            content,
-            operate_day,
-            operate_start_time,
-            operate_end_time,
-            images,
-            create_date,
-            status,
-            dishes,
-            longitude,
-            latitude
+        id,
+        name,
+        code,
+        address,
+        principal,
+        phone,
+        content,
+        operate_day,
+        operate_start_time,
+        operate_end_time,
+        images,
+        create_date,
+        status,
+        dishes,
+        longitude,
+        latitude
         from
-            merchant_info
+        merchant_info
         where 1 = 1
         <if test="merchantInfo.code != null and merchantInfo.code != ''">
             AND code LIKE CONCAT('%',#{merchantInfo.code},'%')

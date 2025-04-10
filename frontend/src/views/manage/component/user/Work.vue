@@ -10,7 +10,7 @@
               <a-col :span="16">
                 <a-row>
                   <a-col :span="18">
-                    <a-input v-model="key" placeholder="搜索药店"/>
+                    <a-input v-model="key" placeholder="搜索商家"/>
                   </a-col>
                   <a-col :span="4" :offset="2">
                     <a-button type="primary" @click="fetch">
@@ -118,7 +118,7 @@ export default {
     },
     handleBulletinAddSuccess () {
       this.bulletinAdd.visiable = false
-      this.$message.success('新增定制药品成功')
+      this.$message.success('新增定制商品成功')
     },
     customAdd (row) {
       this.bulletinAdd.data = row
@@ -151,7 +151,7 @@ export default {
     },
     view (record) {
       // if (record.currentStatus === '0') {
-      //   this.$message.warn('此药店不在营业时间内')
+      //   this.$message.warn('此商家不在营业时间内')
       //   return false
       // }
       this.orderMapView.merchantInfo = record

@@ -210,6 +210,7 @@ export default {
           if (values.factoryDate) {
             values.factoryDate = moment(values.factoryDate).format('YYYY-MM-DD')
           }
+          values.merchantId = this.currentUser.userId
           this.loading = true
           this.$post('/cos/vehicle-info', {
             ...values

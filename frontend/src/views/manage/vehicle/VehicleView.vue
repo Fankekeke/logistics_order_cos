@@ -32,7 +32,7 @@
         <a-col :span="6"><b>联系电话：</b>
           {{ vehicleData.phone }}
         </a-col>
-        <a-col :span="6"><b>所属用户：</b>
+        <a-col :span="6"><b>所属商家：</b>
           {{ vehicleData.userName }}
         </a-col>
       </a-row>

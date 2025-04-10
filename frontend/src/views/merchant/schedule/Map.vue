@@ -134,47 +134,97 @@
                   <br/>
                 </div>
                 <br/>
-                <div style="font-size: 12px;font-family: SimHei" v-if="orderItemInfo.length !== 0">
-                  <a-row style="padding-left: 24px;padding-right: 24px;">
-                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买商品</span></a-col>
-                    <a-table :columns="columns" :data-source="orderItemInfo" :pagination="false"></a-table>
-                  </a-row>
-                  <br/>
-                </div>
                 <br/>
-                <div style="font-size: 12px;font-family: SimHei" v-if="addressInfo !== null">
+                <div style="font-size: 12px;font-family: SimHei" v-if="vehicleInfo !== null">
                   <a-row style="padding-left: 24px;padding-right: 24px;">
-                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">收货地址</span></a-col>
-                    <a-col :span="8"><b>收货编号：</b>
-                      {{ addressInfo.code }}
+                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">车辆信息</span></a-col>
+                    <a-col :span="8"><b>车辆编号：</b>
+                      {{ vehicleInfo.vehicleNo }}
                     </a-col>
-                    <a-col :span="8"><b>详细地址：</b>
-                      {{ addressInfo.address ? addressInfo.address : '- -' }}
+                    <a-col :span="8"><b>车牌号：</b>
+                      {{ vehicleInfo.vehicleNumber ? vehicleInfo.vehicleNumber : '- -' }}
                     </a-col>
-                    <a-col :span="8"><b>联系人：</b>
-                      {{ addressInfo.contactPerson ? addressInfo.contactPerson : '- -' }}
-                    </a-col>
-                    <br/>
-                    <br/>
-                    <a-col :span="8"><b>联系方式：</b>
-                      {{ addressInfo.contactMethod }}
+                    <a-col :span="8"><b>车辆颜色：</b>
+                      {{ vehicleInfo.vehicleColor ? vehicleInfo.vehicleColor : '- -' }}
                     </a-col>
                   </a-row>
                   <br/>
+                  <a-row style="padding-left: 24px;padding-right: 24px;">
+                    <a-col :span="8"><b>排放标准：</b>
+                      {{ vehicleInfo.emissionStandard ? vehicleInfo.emissionStandard : '- -' }}
+                    </a-col>
+                    <a-col :span="8"><b>发动机号码：</b>
+                      {{ vehicleInfo.engineNo ? vehicleInfo.engineNo : '- -' }}
+                    </a-col>
+                    <a-col :span="8"><b>联系电话：</b>
+                      {{ vehicleInfo.phone ? vehicleInfo.phone : '- -' }}
+                    </a-col>
+                  </a-row>
+                  <br/>
+                  <a-row style="padding-left: 24px;padding-right: 24px;">
+                    <a-col :span="8"><b>车辆名称：</b>
+                      {{ vehicleInfo.name ? vehicleInfo.name : '- -' }}
+                    </a-col>
+                    <a-col :span="8"><b>燃料类型：</b>
+                      <span v-if="vehicleInfo.fuelType == 1" style="color: green">燃油</span>
+                      <span v-if="vehicleInfo.fuelType == 2" style="color: green">柴油</span>
+                      <span v-if="vehicleInfo.fuelType == 3" style="color: green">油电混动</span>
+                      <span v-if="vehicleInfo.fuelType == 4" style="color: green">电能</span>
+                    </a-col>
+                    <br/>
+                    <br/>
+                    <a-col :span="24"><b>备注：</b>
+                      {{ vehicleInfo.content }}
+                    </a-col>
+                  </a-row>
+                  <br/>
+                  <br/>
+                </div>
+                <div style="font-size: 12px;font-family: SimHei" v-if="scheduleList.length !== 0">
+                  <a-row style="padding-left: 24px;padding-right: 24px;">
+                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">配送订单</span></a-col>
+                    <a-col style="margin-bottom: 15px">
+                      <a-steps :current="scheduleList.length" direction="vertical" progress-dot size="small">
+                        <a-step v-for="(item, index) in scheduleList" :key="index" :title="item.address.address">
+                          <template slot="subTitle">
+                            <span>距离 {{ (item.item.distance / 1000).toFixed(2) }}公里</span>
+                          </template>
+                          <template slot="description">
+                            <p style="margin-bottom: 10px">
+                              <a-row :gutter="25">
+                                <a-col :span="12">
+                                  <a-tag v-if="item.item.status == 1" color="#108ee9">已送达</a-tag>
+                                  <a-tag v-if="item.item.status == 0" color="#f50">未配送</a-tag>
+                                  <a-tooltip>
+                                    <template slot="title">
+                                      点击进行道路导航
+                                    </template>
+                                    <a-icon type="car" theme="twoTone" style="margin-left: 15px" @click="getRoadData(item.item.previousLongitude, item.item.previousLatitude, item.item.currentLongitude, item.item.currentLatitude)"/>
+                                  </a-tooltip>
+                                </a-col>
+                                <a-col :span="12">
+                                  <b>收货人：</b>{{ item.address.contactPerson }} - {{ item.address.contactMethod }}
+                                </a-col>
+                              </a-row>
+                            </p>
+                            <a-table :columns="columns" :data-source="item.orderItem" :pagination="false"></a-table>
+                          </template>
+                        </a-step>
+                      </a-steps>
+                    </a-col>
+                  </a-row>
                 </div>
                 <br/>
-                <div style="font-size: 12px;font-family: SimHei" v-if="staffInfo !== null">
+                <div style="font-size: 12px;font-family: SimHei" v-if="roadData.length !== 0">
                   <a-row style="padding-left: 24px;padding-right: 24px;">
-                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">配送员信息</span></a-col>
-                    <a-col :span="8"><b>员工姓名：</b>
-                      {{ staffInfo.name }}
-                    </a-col>
-                    <a-col :span="8"><b>性别：</b>
-                      <span v-if="staffInfo.sex == '1'">男</span>
-                      <span v-if="staffInfo.sex == '2'">女</span>
-                    </a-col>
-                    <a-col :span="8"><b>员工工号：</b>
-                      {{ staffInfo.code }}
+                    <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">道路导航</span></a-col>
+                    <a-col :span="24" style="height: 450px;overflow-y: auto">
+                      <a-skeleton active v-if="loading" />
+                      <a-timeline v-if="!loading">
+                        <a-timeline-item v-for="(item,index) in roadData" :key="index">
+                          <div v-html="item"></div>
+                        </a-timeline-item>
+                      </a-timeline>
                     </a-col>
                   </a-row>
                   <br/>
@@ -227,6 +277,9 @@ export default {
       userInfo: null,
       orderInfo: null,
       merchantInfo: null,
+      vehicleInfo: [],
+      scheduleList: [],
+      loading: false,
       orderItemInfo: [],
       addressInfo: null,
       staffInfo: null,
@@ -307,37 +360,48 @@ export default {
   watch: {
     'orderShow': function (value) {
       if (value) {
-        this.dataInit(this.orderData.id)
+        this.dataInit(this.orderData.scheduleCode)
       }
     }
   },
   methods: {
-    dataInit (orderId) {
-      this.$get(`/cos/order-info/${orderId}`).then((r) => {
-        this.userInfo = r.data.user
-        this.orderInfo = r.data.order
+    dataInit (scheduleCode) {
+      this.$get(`/cos/schedule-info/querySchedule`, {scheduleCode}).then((r) => {
+        // this.userInfo = r.data.user
+        // this.orderInfo = r.data.order
         this.merchantInfo = r.data.merchant
-        this.orderItemInfo = r.data.orderItem
-        this.addressInfo = r.data.address
-        this.staffInfo = r.data.staff
-        this.evaluateInfo = r.data.evaluate
+        this.vehicleInfo = r.data.vehicle
+        this.scheduleList = r.data.schedule
+        console.log(this.scheduleList)
+        // this.orderItemInfo = r.data.orderItem
+        // this.addressInfo = r.data.address
+        // this.staffInfo = r.data.staff
+        // this.evaluateInfo = r.data.evaluate
         setTimeout(() => {
           baiduMap.initMap('areas')
           this.getLocal()
-          this.navigation(this.addressInfo, this.merchantInfo)
+          this.scheduleList.forEach((itemOrder, index) => {
+            let item = itemOrder.item
+            if (index === 0) {
+              this.navigation(item.previousLongitude, item.previousLatitude, item.currentLongitude, item.currentLatitude)
+            } else {
+              this.navigation(item.currentLongitude, item.currentLatitude, item.nextLongitude, item.nextLatitude)
+            }
+          })
         }, 200)
       })
     },
-    navigation (address, merchant) {
+    navigation (startLongitude, startLatitude, endLongitude, endLatitude) {
       baiduMap.clearOverlays()
       baiduMap.rMap().enableScrollWheelZoom(true)
       // eslint-disable-next-line no-undef
       let driving = new BMap.DrivingRoute(baiduMap.rMap(), {renderOptions: {map: baiduMap.rMap(), autoViewport: true}})
       // eslint-disable-next-line no-undef
-      driving.search(new BMap.Point(merchant.longitude, merchant.latitude), new BMap.Point(address.longitude, address.latitude))
+      driving.search(new BMap.Point(startLongitude, startLatitude), new BMap.Point(endLongitude, endLatitude))
       // this.getRoadData()
     },
-    getRoadData () {
+    getRoadData (startLongitude, startLatitude, endLongitude, endLatitude) {
+      this.loading = true
       let options = {
         onSearchComplete: results => {
           // eslint-disable-next-line eqeqeq,no-undef
@@ -357,19 +421,17 @@ export default {
               }
             }
             this.roadData = s
+            this.loading = false
           }
         }
       }
       // eslint-disable-next-line no-undef
       let driving = new BMap.DrivingRoute(baiduMap.rMap(), options)
       // eslint-disable-next-line no-undef
-      let start = new BMap.Point(this.nowPoint.lng, this.nowPoint.lat)
+      let start = new BMap.Point(startLongitude, startLatitude)
       let end = null
-      if (this.rentShow) {
-        end = new BMap.Point(this.rentData.longitude, this.rentData.latitude)
-      } else {
-        end = new BMap.Point(this.communityData.longitude, this.communityData.latitude)
-      }
+      end = new BMap.Point(endLongitude, endLatitude)
+
       // eslint-disable-next-line no-undef
       driving.search(start, end)
     },
@@ -433,5 +495,13 @@ export default {
   }
   >>> .ant-radio-button-wrapper {
     border-radius: 0;
+  }
+
+  >>> .ant-steps-item-content {
+    width: 93% !important;
+  }
+
+  >>> .ant-steps-item-title {
+    margin-bottom: 15px;
   }
 </style>

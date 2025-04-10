@@ -85,11 +85,11 @@
     <br/>
     <div style="font-size: 13px;font-family: SimHei" v-if="merchantInfo !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">药店信息</span></a-col>
-        <a-col :span="6"><b>药店编号：</b>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">商家信息</span></a-col>
+        <a-col :span="6"><b>商家编号：</b>
           {{ merchantInfo.code }}
         </a-col>
-        <a-col :span="6"><b>药店名称：</b>
+        <a-col :span="6"><b>商家名称：</b>
           {{ merchantInfo.name ? merchantInfo.name : '- -' }}
         </a-col>
         <a-col :span="6"><b>地 址：</b>
@@ -110,7 +110,7 @@
     <br/>
     <div style="font-size: 13px;font-family: SimHei" v-if="orderItemInfo.length !== 0">
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买药品</span></a-col>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买商品</span></a-col>
         <a-table :columns="columns" :data-source="orderItemInfo"></a-table>
       </a-row>
       <br/>
@@ -200,7 +200,7 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'dishesName'
       }, {
         title: '图片',
@@ -281,13 +281,13 @@ export default {
       })
     },
     selectStaffList () {
-      this.$get(`/cos/staff-info/selectStaffByMerchant/${this.currentUser.userId}`).then((r) => {
+      this.$get(`/cos/vehicle-info/selectVehicleByMerchant/${this.currentUser.userId}`).then((r) => {
         this.staffList = r.data.user
       })
     },
     checkDealer () {
       if (this.staffId === null) {
-        this.$message.warn('请选择配送员工')
+        this.$message.warn('请选择调度车辆')
         return false
       }
       this.$get(`/cos/order-info/checkDealer`, {orderCode: this.orderInfo.code, staffId: this.staffId}).then((r) => {

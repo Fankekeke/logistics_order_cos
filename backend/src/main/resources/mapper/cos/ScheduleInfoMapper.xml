@@ -2,4 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.mrbird.febs.cos.dao.ScheduleInfoMapper">
 
+    <!-- 分页获取车次记录信息 -->
+    <select id="queryScheduleByPage" resultType="java.util.LinkedHashMap">
+        SELECT
+        si.*,
+        IFNULL( sum( si.distance ), 0 ) AS totalDistance,
+        COUNT(si.id) as orderCount,
+        COUNT(CASE WHEN si.status = 1 THEN 1 END) AS overOrderCount,
+        vi.vehicle_no,
+        vi.vehicle_number,
+        vi.vehicle_color,
+        vi.NAME,
+        vi.engine_no,
+        vi.emission_standard,
+        vi.fuel_type,
+        vi.images as vehicleImages,
+        vi.vehicle_type,
+        ui.CODE,
+        ui.NAME AS userName,
+        ui.images,
+        ui.phone,
+        ui.principal
+        FROM
+        schedule_info si
+        LEFT JOIN vehicle_info vi ON ( vi.id = si.vehicle_id )
+        LEFT JOIN merchant_info ui ON ( ui.id = vi.user_id )
+        WHERE
+        1 = 1
+        <if test="scheduleInfo.scheduleCode != null and scheduleInfo.scheduleCode != ''">
+            AND si.schedule_code LIKE CONCAT('%',#{scheduleInfo.scheduleCode},'%')
+        </if>
+        <if test="scheduleInfo.vehicleNumber != null and scheduleInfo.vehicleNumber != ''">
+            AND vi.vehicle_number LIKE CONCAT('%',#{scheduleInfo.vehicleNumber},'%')
+        </if>
+        <if test="scheduleInfo.userName != null and scheduleInfo.userName != ''">
+            AND ui.name LIKE CONCAT('%',#{scheduleInfo.userName},'%')
+        </if>
+        <if test="scheduleInfo.userId != null and scheduleInfo.userId != ''">
+            AND ui.user_id = #{scheduleInfo.userId}
+        </if>
+        GROUP BY
+        si.schedule_code
+        ORDER BY
+        si.schedule_code DESC
+    </select>
 </mapper>

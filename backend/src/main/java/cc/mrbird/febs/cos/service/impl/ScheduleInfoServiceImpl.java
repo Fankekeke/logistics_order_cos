@@ -6,6 +6,7 @@ import cc.mrbird.febs.cos.entity.*;
 import cc.mrbird.febs.cos.dao.ScheduleInfoMapper;
 import cc.mrbird.febs.cos.service.*;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,12 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +39,14 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
     private final IOrderInfoService orderInfoService;
 
     private final IUserInfoService userInfoService;
+
+    private final IOrderItemInfoService orderItemInfoService;
+
+    private final IDishesInfoService dishesInfoService;
+
+    private final TemplateEngine templateEngine;
+
+    private final IMailService mailService;
 
     /**
      * 分页获取车次记录信息
@@ -62,6 +70,11 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean orderBindSchedule(Integer vehicleId, Integer orderId) throws FebsException {
+        // 判断此订单是否已经绑定
+        if (orderInfoService.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getId, orderId).eq(OrderInfo::getStatus, "2")) != null) {
+            throw new FebsException("订单已绑定！");
+        }
+
         // 获取车辆信息
         VehicleInfo vehicleInfo = vehicleInfoService.getById(vehicleId);
         if (vehicleInfo == null) {
@@ -69,7 +82,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         }
 
         // 获取商家地址
-        MerchantInfo merchantInfo = merchantInfoService.getById(vehicleInfo.getMerchantId());
+        MerchantInfo merchantInfo = merchantInfoService.getById(vehicleInfo.getUserId());
         if (merchantInfo == null) {
             throw new FebsException("商家信息不存在！");
         }
@@ -98,17 +111,17 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         scheduleInfo.setCurrentLatitude(addressInfo.getLatitude());
         scheduleInfo.setNextLongitude(merchantInfo.getLongitude());
         scheduleInfo.setNextLatitude(merchantInfo.getLatitude());
-        scheduleInfo.setIndexNo(1);
         scheduleInfo.setStatus("0");
         double distance = LocationUtils.getDistance(merchantInfo.getLongitude().doubleValue(), merchantInfo.getLatitude().doubleValue(), addressInfo.getLongitude().doubleValue(), addressInfo.getLatitude().doubleValue());
         scheduleInfo.setDistance(BigDecimal.valueOf(distance));
 
         // 判断车辆是否已绑定工单
         if (StrUtil.isEmpty(vehicleInfo.getScheduleCode())) {
+            scheduleInfo.setIndexNo(1);
             scheduleCode = "SCH-" + System.currentTimeMillis();
             // 更新车辆车次
             vehicleInfo.setScheduleCode(scheduleCode);
-            vehicleInfo.setWorkStatus("1");
+            // vehicleInfo.setWorkStatus("1");
             vehicleInfoService.updateById(vehicleInfo);
 
             scheduleInfo.setScheduleCode(scheduleCode);
@@ -116,20 +129,29 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         } else {
             scheduleCode = vehicleInfo.getScheduleCode();
             scheduleInfo.setScheduleCode(scheduleCode);
+            this.save(scheduleInfo);
         }
 
         // 获取此车次信息
         List<ScheduleInfo> scheduleInfoList = this.list(Wrappers.<ScheduleInfo>lambdaQuery().eq(ScheduleInfo::getScheduleCode, scheduleCode));
-        scheduleInfoList.add(scheduleInfo);
 
         // 按照距离排序，距离最短排在前面
-        scheduleInfoList.sort((o1, o2) -> {
-            if (o1.getDistance().compareTo(o2.getDistance()) > 0) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
+        scheduleInfoList = scheduleInfoList.stream().sorted(Comparator.comparing(ScheduleInfo::getDistance)).collect(Collectors.toList());
+
+        // 设置订单状态
+        orderInfo.setStatus("2");
+
+        UserInfo userInfo = userInfoService.getById(orderInfo.getUserId());
+        // 配送发送邮件
+        if (StrUtil.isNotEmpty(userInfo.getMail())) {
+            Context context = new Context();
+            context.setVariable("today", DateUtil.formatDate(new Date()));
+            context.setVariable("custom", userInfo.getName() + "，您好，在 " + merchantInfo.getName() + " 消费订单 " + orderInfo.getCode() + "，正在配送，请耐心等待");
+            String emailContent = templateEngine.process("registerEmail", context);
+            mailService.sendHtmlMail(userInfo.getMail(), DateUtil.formatDate(new Date()) + "配送通知", emailContent);
+        }
+        // 更新订单状态
+        orderInfoService.updateById(orderInfo);
 
         for (int i = 0; i < scheduleInfoList.size(); i++) {
             ScheduleInfo info = scheduleInfoList.get(i);
@@ -149,7 +171,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
                 info.setNextLongitude(scheduleInfoList.get(i + 1).getCurrentLongitude());
                 info.setNextLatitude(scheduleInfoList.get(i + 1).getCurrentLatitude());
             }
-            this.updateById(info);
+//            this.updateById(info);
         }
         this.updateBatchById(scheduleInfoList);
         return true;
@@ -177,6 +199,8 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         boolean hasSchedule = scheduleInfoList.stream().allMatch(info -> info.getStatus().equals("1"));
         if (hasSchedule) {
             vehicleInfoService.update(Wrappers.<VehicleInfo>lambdaUpdate().set(VehicleInfo::getWorkStatus, "0").set(VehicleInfo::getScheduleCode, null).eq(VehicleInfo::getId, scheduleInfo.getVehicleId()));
+        } else {
+            orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getStatus, "1").eq(OrderInfo::getId, orderId));
         }
         return true;
     }
@@ -188,9 +212,9 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
      * @return 结果
      */
     @Override
-    public List<LinkedHashMap<String, Object>> querySchedule(String scheduleCode) throws FebsException {
+    public LinkedHashMap<String, Object> querySchedule(String scheduleCode) throws FebsException {
         // 返回数据
-        List<LinkedHashMap<String, Object>> list = new ArrayList<>();
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         if (StrUtil.isEmpty(scheduleCode)) {
             throw new FebsException("车辆调度编号不能为空！");
         }
@@ -214,6 +238,14 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         List<UserInfo> userInfoList = userInfoService.list(Wrappers.<UserInfo>lambdaQuery().in(UserInfo::getId, userIds));
         Map<Integer, UserInfo> userMap = userInfoList.stream().collect(Collectors.toMap(UserInfo::getId, e -> e));
 
+        // 车辆信息
+        VehicleInfo vehicleInfo = vehicleInfoService.getById(scheduleInfoList.get(0).getVehicleId());
+        // 所属商家
+        MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getId, vehicleInfo.getUserId()));
+        result.put("vehicle", vehicleInfo);
+        result.put("merchant", merchantInfo);
+
+        List<LinkedHashMap<String, Object>> list = new ArrayList<>();
         for (ScheduleInfo scheduleInfo : scheduleInfoList) {
             OrderInfo orderInfo = orderMap.get(scheduleInfo.getOrderId());
             if (orderInfo == null) {
@@ -221,14 +253,36 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
             }
             AddressInfo addressInfo = addressMap.get(orderInfo.getAddressId());
             UserInfo userInfo = userMap.get(orderInfo.getUserId());
+
+            // 订单详情
+            List<OrderItemInfo> orderItemInfoList = orderItemInfoService.list(Wrappers.<OrderItemInfo>lambdaQuery().eq(OrderItemInfo::getOrderId, orderInfo.getId()));
+            // 获取商品信息
+            List<Integer> dishesIds = orderItemInfoList.stream().map(OrderItemInfo::getDishesId).distinct().collect(Collectors.toList());
+            List<DishesInfo> dishesInfoList = dishesInfoService.list(Wrappers.<DishesInfo>lambdaQuery().in(DishesInfo::getId, dishesIds));
+            Map<Integer, DishesInfo> dishesMap = dishesInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, e -> e));
+
+            for (OrderItemInfo orderItemInfo : orderItemInfoList) {
+                if (CollectionUtil.isNotEmpty(dishesMap) && dishesMap.get(orderItemInfo.getDishesId()) != null) {
+                    DishesInfo dishesInfo = dishesMap.get(orderItemInfo.getDishesId());
+                    orderItemInfo.setDishesName(dishesInfo.getName());
+                    orderItemInfo.setImages(dishesInfo.getImages());
+                    orderItemInfo.setRawMaterial(dishesInfo.getRawMaterial());
+                    orderItemInfo.setPortion(dishesInfo.getPortion());
+                }
+            }
+
             list.add(new LinkedHashMap<String, Object>() {
                 {
+                    put("orderItem", orderItemInfoList);
+                    put("item", scheduleInfo);
                     put("order", orderInfo);
                     put("address", addressInfo);
                     put("user", userInfo);
                 }
             });
         }
-        return list;
+
+        result.put("schedule", list);
+        return result;
     }
 }

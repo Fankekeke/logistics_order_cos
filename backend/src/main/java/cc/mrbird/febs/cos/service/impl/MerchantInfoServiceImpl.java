@@ -39,8 +39,6 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
 
     private final MerchantInfoMapper merchantInfoMapper;
 
-    private final StaffInfoMapper staffInfoMapper;
-
     private final MerchantMemberInfoMapper merchantMemberInfoMapper;
 
     /**
@@ -93,7 +91,6 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         BigDecimal totalPrice = orderInfoList.stream().map(OrderInfo::getAfterOrderPrice).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
         result.put("orderNum", orderInfoList.size());
         result.put("orderPrice", totalPrice);
-        result.put("staffNum", staffInfoMapper.selectCount(Wrappers.<StaffInfo>lambdaQuery().eq(StaffInfo::getCanteenId, merchantInfo.getId()).eq(StaffInfo::getStatus, "1")));
         result.put("memberNum", merchantMemberInfoMapper.selectCount(Wrappers.<MerchantMemberInfo>lambdaQuery().eq(MerchantMemberInfo::getMerchantId, merchantInfo.getId())));
 
         // 本月订单数量
@@ -105,7 +102,8 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
 
         // 本月支出
         BigDecimal orderExpenses1 = orderInfoMapper.queryExpensesByMonthS13X(userId);
-        BigDecimal orderExpenses2 = orderInfoMapper.queryExpensesByMonthS12X(userId);
+        BigDecimal orderExpenses2 = BigDecimal.ZERO;
+//        BigDecimal orderExpenses2 = orderInfoMapper.queryExpensesByMonthS12X(userId);
         result.put("monthExpensesTotal", NumberUtil.add(orderExpenses1, orderExpenses2));
         // 本月利润
         result.put("monthProfitTotal", NumberUtil.sub(orderPrice, NumberUtil.add(orderExpenses1, orderExpenses2)));
@@ -151,7 +149,6 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         BigDecimal totalPrice = orderInfoList.stream().map(OrderInfo::getAfterOrderPrice).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
         result.put("orderNum", orderInfoList.size());
         result.put("orderPrice", totalPrice);
-        result.put("staffNum", staffInfoMapper.selectCount(Wrappers.<StaffInfo>lambdaQuery().eq(StaffInfo::getStatus, "1")));
         result.put("merchantNum", merchantInfoMapper.selectCount(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getStatus, "1")));
 
         // 本月订单数量

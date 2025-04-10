@@ -47,5 +47,5 @@ public interface IScheduleInfoService extends IService<ScheduleInfo> {
      * @param scheduleCode 车辆调度编号
      * @return 结果
      */
-    List<LinkedHashMap<String, Object>> querySchedule(String scheduleCode) throws FebsException;
+    LinkedHashMap<String, Object> querySchedule(String scheduleCode) throws FebsException;
 }

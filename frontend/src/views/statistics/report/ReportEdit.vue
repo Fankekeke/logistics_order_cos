@@ -19,7 +19,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='药店'>
+          <a-form-item label='商家'>
             <a-select @change="pharmacyCheck" v-decorator="[
               'pharmacyId',
               ]">
@@ -31,7 +31,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='药品'>
+          <a-form-item label='商品'>
             <a-select style="width: 100%" v-decorator="[
               'drugId',
               ]">

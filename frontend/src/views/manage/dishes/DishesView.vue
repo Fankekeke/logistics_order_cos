@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="药品详情" @cancel="onClose" :width="1000">
+  <a-modal v-model="show" title="商品详情" @cancel="onClose" :width="1000">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
@@ -8,13 +8,13 @@
     <div style="font-size: 13px;font-family: SimHei" v-if="dishesData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">基础信息</span></a-col>
-        <a-col :span="8"><b>药品编号：</b>
+        <a-col :span="8"><b>商品编号：</b>
           {{ dishesData.code }}
         </a-col>
-        <a-col :span="8"><b>药品名称：</b>
+        <a-col :span="8"><b>商品名称：</b>
           {{ dishesData.name ? dishesData.name : '- -' }}
         </a-col>
-        <a-col :span="8"><b>功效：</b>
+        <a-col :span="8"><b>品牌：</b>
           {{ dishesData.rawMaterial ? dishesData.rawMaterial : '- -' }}
         </a-col>
       </a-row>
@@ -42,7 +42,7 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>所属药店：</b>
+        <a-col :span="8"><b>所属商家：</b>
           {{ dishesData.merchantName }}
         </a-col>
         <a-col :span="8"><b>联系人：</b>
@@ -54,10 +54,10 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>药品类型：</b>
+        <a-col :span="8"><b>商品类型：</b>
           {{ dishesData.typeName }}
         </a-col>
-        <a-col :span="8"><b>是否为处方药：</b>
+        <a-col :span="8"><b>是否为保价商品：</b>
           <span v-if="dishesData.prescriptionFlag == 1" style="color: red">是</span>
           <span v-if="dishesData.prescriptionFlag == 0" style="color: green">否</span>
         </a-col>

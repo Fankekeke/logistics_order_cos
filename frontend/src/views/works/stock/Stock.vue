@@ -7,7 +7,7 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药品名称"
+                label="商品名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.drugName"/>
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药房名称"
+                label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.pharmacyName"/>
@@ -133,23 +133,23 @@ export default {
     }),
     columns () {
       return [{
-        title: '药店名称',
+        title: '商家名称',
         ellipsis: true,
         dataIndex: 'pharmacyName'
       }, {
-        title: '药店编号',
+        title: '商家编号',
         ellipsis: true,
         dataIndex: 'pharmacyCode'
       }, {
-        title: '药品名称',
+        title: '商品名称',
         ellipsis: true,
         dataIndex: 'drugName'
       }, {
-        title: '功效',
+        title: '品牌',
         ellipsis: true,
         dataIndex: 'rawMaterial'
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -216,10 +216,10 @@ export default {
         endDate: this.dateList[1]
       }).then((r) => {
         if (r.data.data <= 5 && r.data.data > 0) {
-          this.$message.warn('该药品即将到期请尽快下架')
+          this.$message.warn('该商品即将到期请尽快下架')
         }
         if (r.data.data <= 0) {
-          this.$message.warn('该药品已经到期请下架')
+          this.$message.warn('该商品已经到期请下架')
         }
       })
       this.dateVisible = false

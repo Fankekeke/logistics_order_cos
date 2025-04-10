@@ -49,8 +49,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     private final IDishesInfoService dishesInfoService;
 
-    private final IStaffInfoService staffInfoService;
-
     private final IEvaluateInfoService evaluateInfoService;
 
     private final TemplateEngine templateEngine;
@@ -361,12 +359,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
                 result.put("address", addressInfo);
             }
-
-            // 配送员工
-            if (orderInfo.getStaffId() != null) {
-                StaffInfo staffInfo = staffInfoService.getById(orderInfo.getStaffId());
-                result.put("staff", staffInfo);
-            }
         }
         return result;
     }
@@ -502,12 +494,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             if (orderInfo.getAddressId() != null) {
                 AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
                 result.put("address", addressInfo);
-            }
-
-            // 配送员工
-            if (orderInfo.getStaffId() != null) {
-                StaffInfo staffInfo = staffInfoService.getById(orderInfo.getStaffId());
-                result.put("staff", staffInfo);
             }
         }
         return result;

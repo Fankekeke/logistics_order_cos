@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="新增定制药品" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="新增定制商品" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消

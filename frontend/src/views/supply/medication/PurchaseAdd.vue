@@ -24,10 +24,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label='采购药店'>
+          <a-form-item label='采购商家'>
             <a-select @change="pharmacyCheck" v-decorator="[
               'pharmacyId',
-              { rules: [{ required: true, message: '请输入采购药店!' }] }
+              { rules: [{ required: true, message: '请输入采购商家!' }] }
               ]">
               <a-select-option :value="item.id" v-for="(item, index) in pharmacyList" :key="index">{{ item.name }}</a-select-option>
             </a-select>
@@ -53,7 +53,7 @@
       <br/>
       <a-row :gutter="10">
         <a-divider orientation="left">
-          <span style="font-size: 13px">药品信息</span>
+          <span style="font-size: 13px">商品信息</span>
         </a-divider>
         <a-col :span="24">
           <a-table :columns="columns" :data-source="dataList" :pagination="false">
@@ -71,10 +71,10 @@
               <span v-if="record.classification == 3">中西成药</span>
               <span v-if="record.classification == 4">化学原料药</span>
               <span v-if="record.classification == 5">抗生素</span>
-              <span v-if="record.classification == 6">生化药品</span>
-              <span v-if="record.classification == 7">放射性药品</span>
+              <span v-if="record.classification == 6">生化商品</span>
+              <span v-if="record.classification == 7">放射性商品</span>
               <span v-if="record.classification == 8">血清</span>
-              <span v-if="record.classification == 9">诊断药品</span>
+              <span v-if="record.classification == 9">诊断商品</span>
             </template>
             <template slot="dosageFormShow" slot-scope="text, record">
               <span>{{ record.dosageForm }}</span>
@@ -143,7 +143,7 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'name',
         scopedSlots: {customRender: 'nameShow'}
       }, {
@@ -155,7 +155,7 @@ export default {
         dataIndex: 'brand',
         scopedSlots: {customRender: 'brandShow'}
       }, {
-        title: '药品类别',
+        title: '商品类别',
         dataIndex: 'classification',
         scopedSlots: {customRender: 'typeIdShow'}
       }, {

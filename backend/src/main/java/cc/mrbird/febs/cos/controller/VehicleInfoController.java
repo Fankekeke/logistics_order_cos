@@ -2,8 +2,10 @@ package cc.mrbird.febs.cos.controller;
 
 
 import cc.mrbird.febs.common.utils.R;
+import cc.mrbird.febs.cos.entity.MerchantInfo;
 import cc.mrbird.febs.cos.entity.UserInfo;
 import cc.mrbird.febs.cos.entity.VehicleInfo;
+import cc.mrbird.febs.cos.service.IMerchantInfoService;
 import cc.mrbird.febs.cos.service.IUserInfoService;
 import cc.mrbird.febs.cos.service.IVehicleInfoService;
 import cn.hutool.core.date.DateUtil;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class VehicleInfoController {
     private final IVehicleInfoService vehicleInfoService;
 
     private final IUserInfoService userInfoService;
+
+    private final IMerchantInfoService merchantInfoService;
 
     /**
      * 分页获取车辆信息信息
@@ -57,11 +62,14 @@ public class VehicleInfoController {
      * @param userId 用户ID
      * @return 结果
      */
-    @GetMapping("/user/{userId}")
-    public R selectVehicleByUserId(@PathVariable("userId") Integer userId) {
+    @GetMapping("/selectVehicleByMerchant/{userId}")
+    public R selectVehicleByMerchant(@PathVariable("userId") Integer userId) {
         // 用户信息
-        UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userId));
-        return R.ok(vehicleInfoService.list(Wrappers.<VehicleInfo>lambdaQuery().eq(VehicleInfo::getUserId, userInfo.getId())));
+        MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getUserId, userId));
+        if (merchantInfo == null) {
+            return R.ok(Collections.emptyList());
+        }
+        return R.ok(vehicleInfoService.list(Wrappers.<VehicleInfo>lambdaQuery().eq(VehicleInfo::getUserId, merchantInfo.getId()).eq(VehicleInfo::getWorkStatus, "0")));
     }
 
     /**
@@ -84,6 +92,12 @@ public class VehicleInfoController {
     public R save(VehicleInfo vehicleInfo) {
         vehicleInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
         vehicleInfo.setVehicleNo("AD-" + System.currentTimeMillis());
+
+        // 所属商家
+        MerchantInfo merchantInfo = merchantInfoService.getOne(Wrappers.<MerchantInfo>lambdaQuery().eq(MerchantInfo::getUserId, vehicleInfo.getUserId()));
+        if (merchantInfo != null) {
+            vehicleInfo.setUserId(merchantInfo.getId());
+        }
         return R.ok(vehicleInfoService.save(vehicleInfo));
     }
 

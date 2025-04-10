@@ -123,7 +123,7 @@ export default {
           }
         }
       }, {
-        title: '药店',
+        title: '商家',
         dataIndex: 'pharmacyName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -133,7 +133,7 @@ export default {
           }
         }
       }, {
-        title: '药品',
+        title: '商品',
         dataIndex: 'drugName',
         customRender: (text, row, index) => {
           if (text !== null) {

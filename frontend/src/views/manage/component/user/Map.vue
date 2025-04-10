@@ -24,7 +24,7 @@
             <a-row :gutter="20" style="padding: 50px">
               <div style="margin-top: 150px;text-align: center"  v-if="dishesList.length === 0">
                 <a-icon type="alert" theme="twoTone" style="font-size: 75px"/>
-                <h1 style="margin-top: 20px">暂无此药品</h1>
+                <h1 style="margin-top: 20px">暂无此商品</h1>
               </div>
               <a-col :span="8" v-for="(item, index) in dishesList" :key="index" style="margin-bottom: 15px">
                 <div style="width: 100%;margin-bottom: 15px;text-align: left;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;">
@@ -72,7 +72,7 @@
                       <a-avatar shape="square" :size="50" icon="user" :src="'http://127.0.0.1:9527/imagesWeb/' + orderData.images.split(',')[0]" />
                     </a-popover>
                   </a-col>
-                  <a-col :span="8"><b>药店编号：</b>
+                  <a-col :span="8"><b>商家编号：</b>
                     {{ orderData.code }}
                   </a-col>
                   <a-col :span="8"><b>负责人：</b>
@@ -106,7 +106,7 @@
                   </div>
                   <div style="margin-top: 150px;text-align: center"  v-if="checkList.length === 0">
                     <a-icon type="smile" theme="twoTone" style="font-size: 75px"/>
-                    <h1 style="margin-top: 20px">请选择药品</h1>
+                    <h1 style="margin-top: 20px">请选择商品</h1>
                   </div>
                 </div>
               </div>
@@ -121,7 +121,7 @@
                   <div v-if="checkList.length !== 0" style="font-size: 12px;font-family: SimHei">
                     <a-table :columns="columns1" :rowKey="record => record.id" :data-source="checkList" :pagination="false">
                     </a-table>
-<!--                    <a-alert :message="'购买药品热量【'+totalHeat+'】 超过600，请合理规划' " banner v-if="totalHeat > 600"/>-->
+<!--                    <a-alert :message="'购买商品热量【'+totalHeat+'】 超过600，请合理规划' " banner v-if="totalHeat > 600"/>-->
                     <a-row style="padding-left: 20px;padding-right: 20px;margin-top: 30px">
                       <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 配送/店内自取</span></a-col>
                       <a-col :span="24">
@@ -172,7 +172,7 @@
                         </a-form-item>
                       </a-col>
                     </a-row>
-                    <div style="padding-left: 20px;margin-top: 25px;text-align: right;padding-right: 30px"><span>药品合计</span>
+                    <div style="padding-left: 20px;margin-top: 25px;text-align: right;padding-right: 30px"><span>商品合计</span>
                       <span style="color: red">{{ totalPrice }} 元</span>
                     </div>
                     <div style="padding-left: 20px;margin-top: 5px;text-align: right;padding-right: 30px" v-if="orderAddInfo.isMember == 1"><span>会员折扣</span>
@@ -187,7 +187,7 @@
                   </div>
                   <div style="margin-top: 150px;text-align: center"  v-if="checkList.length === 0">
                     <a-icon type="smile" theme="twoTone" style="font-size: 75px"/>
-                    <h1 style="margin-top: 20px">请选择药品</h1>
+                    <h1 style="margin-top: 20px">请选择商品</h1>
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@
         </a-col>
       </a-row>
       <a-drawer
-        title="药店评价"
+        title="商家评价"
         width="600"
         :closable="false"
         :visible="childrenDrawer"
@@ -266,7 +266,7 @@ export default {
     }),
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'name'
       }, {
         title: '图片',
@@ -284,7 +284,7 @@ export default {
         title: '购买数量',
         dataIndex: 'amount'
       }, {
-        title: '处方药',
+        title: '保价商品',
         dataIndex: 'prescriptionFlag',
         customRender: (text, row, index) => {
           switch (text) {
@@ -324,7 +324,7 @@ export default {
     },
     columns1 () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'name'
       }, {
         title: '图片',
@@ -579,11 +579,11 @@ export default {
     },
     next () {
       if (this.checkList.length === 0) {
-        this.$message.warn('请选择药品信息')
+        this.$message.warn('请选择商品信息')
         return false
       }
       this.nextFlag = 2
-      // 判断checkList是否含有处方药品
+      // 判断checkList是否含有处方商品
       if (this.checkList.some(e => e.prescriptionFlag == 1)) {
         console.log(this.checkList)
         this.prescriptionFlag = true

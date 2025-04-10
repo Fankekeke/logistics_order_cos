@@ -23,7 +23,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药店名称"
+                label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.merchantName"/>
@@ -40,7 +40,7 @@
     <div>
       <div class="operator">
 <!--        <a-button type="primary" ghost @click="add">添加订单</a-button>-->
-        <a-button @click="batchDelete">删除</a-button>
+<!--        <a-button @click="batchDelete">删除</a-button>-->
       </div>
       <!-- 表格区域 -->
       <a-table ref="TableInfo"
@@ -63,37 +63,10 @@
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="file-search" @click="orderViewOpen(record)" title="详 情"></a-icon>
-          <a-icon v-if="record.status == -2" type="warning" @click="returnAudit(record)" title="退 货" style="margin-left: 15px"></a-icon>
-<!--          <a-icon v-if="record.status == 1 && record.type == 0" type="check" @click="orderComplete(record)" title="订单完成" style="margin-left: 15px"></a-icon>-->
-          <a-icon v-if="record.addressId != null && (record.status == 1 || record.status == 2)" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
-          <a-icon v-if="record.type == 1" type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
+          <a-icon type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <order-audit
-      @close="handleorderAuditViewClose"
-      @success="handleorderAuditViewSuccess"
-      :orderShow="orderAuditView.visiable"
-      :orderData="orderAuditView.data">
-    </order-audit>
-    <order-status
-      @close="handleorderStatusViewClose"
-      @success="handleorderStatusViewSuccess"
-      :orderStatusShow="orderStatusView.visiable"
-      :orderStatusData="orderStatusView.data">
-    </order-status>
-    <order-view
-      @close="handleorderViewClose"
-      @success="handleorderViewSuccess"
-      :orderShow="orderView.visiable"
-      :orderData="orderView.data">
-    </order-view>
-    <order-add
-      @close="handleorderAddClose"
-      @success="handleorderAddSuccess"
-      :orderAddShow="orderAdd.visiable">
-    </order-add>
     <MapView
       @close="handleorderMapViewClose"
       :orderShow="orderMapView.visiable"
@@ -106,16 +79,12 @@
 import RangeDate from '@/components/datetime/RangeDate'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import OrderAdd from './OrderAdd'
-import OrderAudit from './OrderAudit'
-import OrderView from './OrderView'
-import OrderStatus from './OrderStatus.vue'
-import MapView from '../../manage/map/Map.vue'
+import MapView from './/Map.vue'
 moment.locale('zh-cn')
 
 export default {
   name: 'order',
-  components: {OrderView, OrderAudit, RangeDate, OrderStatus, OrderAdd, MapView},
+  components: {RangeDate, MapView},
   data () {
     return {
       advanced: false,
@@ -156,7 +125,6 @@ export default {
         visiable: false,
         data: null
       },
-      merchantId: null,
       userList: []
     }
   },
@@ -193,7 +161,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '所属药店',
+        title: '所属商家',
         dataIndex: 'merchantName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -204,7 +172,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药店图片',
+        title: '商家图片',
         dataIndex: 'merchantImages',
         customRender: (text, record, index) => {
           if (!record.merchantImages) return <a-avatar shape="square" icon="user" />
@@ -290,16 +258,11 @@ export default {
     }
   },
   mounted () {
-    this.$get('/cos/staff-info/selectMerchantByStaffId', {
-      userId: this.currentUser.userId
-    }).then(res => {
-      this.merchantId = res.data.data.userId
-      this.fetch()
-    })
+    this.fetch()
   },
   methods: {
     orderComplete (row) {
-      this.$get(`/cos/order-info/audit`, {
+      this.$get(`/cos/schedule-info/audit`, {
         'orderCode': row.code,
         'status': 3
       }).then((r) => {
@@ -322,10 +285,10 @@ export default {
       let that = this
       this.$confirm({
         title: '确定审核退货当前订单?',
-        content: '当您点击确定按钮后，此订单药品会回退到库存中',
+        content: '当您点击确定按钮后，此订单商品会回退到库存中',
         centered: true,
         onOk () {
-          that.$get('/cos/order-info/returnAudit', {orderCode: record.code}).then((r) => {
+          that.$get('/cos/schedule-info/returnAudit', {orderCode: record.code}).then((r) => {
             that.$message.success('退货审核成功')
             that.fetch()
           })
@@ -410,7 +373,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/order-info/' + ids).then(() => {
+          that.$delete('/cos/schedule-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -483,8 +446,8 @@ export default {
       if (params.status === undefined) {
         delete params.status
       }
-      params.merchantId = this.merchantId
-      this.$get('/cos/order-info/page', {
+      params.merchantId = this.currentUser.userId
+      this.$get('/cos/schedule-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

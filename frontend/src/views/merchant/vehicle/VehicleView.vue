@@ -1,67 +1,56 @@
 <template>
-  <a-modal v-model="show" title="药品详情" @cancel="onClose" :width="1000">
+  <a-modal v-model="show" title="车辆详情" @cancel="onClose" :width="1000">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
       </a-button>
     </template>
-    <div style="font-size: 13px;font-family: SimHei" v-if="dishesData !== null">
+    <div style="font-size: 13px;font-family: SimHei" v-if="vehicleData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">基础信息</span></a-col>
-        <a-col :span="8"><b>药品编号：</b>
-          {{ dishesData.code }}
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">车辆信息</span></a-col>
+        <a-col :span="6"><b>车辆编号：</b>
+          {{ vehicleData.vehicleNo }}
         </a-col>
-        <a-col :span="8"><b>药品名称：</b>
-          {{ dishesData.name ? dishesData.name : '- -' }}
+        <a-col :span="6"><b>车牌号：</b>
+          {{ vehicleData.vehicleNumber ? vehicleData.vehicleNumber : '- -' }}
         </a-col>
-        <a-col :span="8"><b>功效：</b>
-          {{ dishesData.rawMaterial ? dishesData.rawMaterial : '- -' }}
+        <a-col :span="6"><b>车辆颜色：</b>
+          {{ vehicleData.vehicleColor ? vehicleData.vehicleColor : '- -' }}
+        </a-col>
+        <a-col :span="6"><b>车辆名称：</b>
+          {{ vehicleData.name }}
         </a-col>
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>型号规格：</b>
-          {{ dishesData.portion }}
+        <a-col :span="6"><b>排放标准：</b>
+          {{ vehicleData.emissionStandard }}
         </a-col>
-        <a-col :span="8"><b>进货价格：</b>
-          {{ dishesData.receiveUnitPrice }} 元
+        <a-col :span="6"><b>发动机号码：</b>
+          {{ vehicleData.engineNo }}
         </a-col>
-        <a-col :span="8"><b>销售价格：</b>
-          {{ dishesData.unitPrice }} 元
+        <a-col :span="6"><b>联系电话：</b>
+          {{ vehicleData.phone }}
         </a-col>
-      </a-row>
-      <br/>
-      <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>上架状态：</b>
-          <span v-if="dishesData.status == 0" style="color: red">下架</span>
-          <span v-if="dishesData.status == 1" style="color: green">上架</span>
-        </a-col>
-        <a-col :span="8"><b>创建时间：</b>
-          {{ dishesData.createDate }}
+        <a-col :span="6"><b>所属商家：</b>
+          {{ vehicleData.userName }}
         </a-col>
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>所属药店：</b>
-          {{ dishesData.merchantName }}
+        <a-col :span="6"><b>燃料类型：</b>
+          <span v-if="vehicleData.fuelType == 1" style="color: green">燃油</span>
+          <span v-if="vehicleData.fuelType == 2" style="color: green">柴油</span>
+          <span v-if="vehicleData.fuelType == 3" style="color: green">油电混动</span>
+          <span v-if="vehicleData.fuelType == 4" style="color: green">电能</span>
         </a-col>
-        <a-col :span="8"><b>联系人：</b>
-          {{ dishesData.principal }}
-        </a-col>
-        <a-col :span="8"><b>联系方式：</b>
-          {{ dishesData.phone }}
+        <br/>
+        <br/>
+        <a-col :span="24"><b>备注：</b>
+          {{ vehicleData.content }}
         </a-col>
       </a-row>
       <br/>
-      <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>药品类型：</b>
-          {{ dishesData.typeName }}
-        </a-col>
-        <a-col :span="8"><b>是否为处方药：</b>
-          <span v-if="dishesData.prescriptionFlag == 1" style="color: red">是</span>
-          <span v-if="dishesData.prescriptionFlag == 0" style="color: green">否</span>
-        </a-col>
-      </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">图册</span></a-col>
@@ -80,7 +69,9 @@
           </a-modal>
         </a-col>
       </a-row>
+      <br/>
     </div>
+    <br/>
   </a-modal>
 </template>
 
@@ -97,20 +88,20 @@ function getBase64 (file) {
   })
 }
 export default {
-  name: 'dishesView',
+  name: 'vehicleView',
   props: {
-    dishesShow: {
+    vehicleShow: {
       type: Boolean,
       default: false
     },
-    dishesData: {
+    vehicleData: {
       type: Object
     }
   },
   computed: {
     show: {
       get: function () {
-        return this.dishesShow
+        return this.vehicleShow
       },
       set: function () {
       }
@@ -126,26 +117,38 @@ export default {
       reserveInfo: null,
       durgList: [],
       logisticsList: [],
-      userInfo: null
+      userInfo: null,
+      vehicleInfo: null,
+      shopInfo: null,
+      brandInfo: null,
+      typeInfo: null
     }
   },
   watch: {
-    dishesShow: function (value) {
+    vehicleShow: function (value) {
       if (value) {
-        this.imagesInit(this.dishesData.images)
+        this.imagesInit(this.vehicleData.images)
       }
     }
   },
   methods: {
-    local (dishesData) {
+    local (vehicleData) {
       baiduMap.clearOverlays()
       baiduMap.rMap().enableScrollWheelZoom(true)
       // eslint-disable-next-line no-undef
-      let point = new BMap.Point(dishesData.longitude, dishesData.latitude)
+      let point = new BMap.Point(vehicleData.longitude, vehicleData.latitude)
       baiduMap.pointAdd(point)
       baiduMap.findPoint(point, 16)
       // let driving = new BMap.DrivingRoute(baiduMap.rMap(), {renderOptions:{map: baiduMap.rMap(), autoViewport: true}});
       // driving.search(new BMap.Point(this.nowPoint.lng,this.nowPoint.lat), new BMap.Point(scenic.point.split(",")[0],scenic.point.split(",")[1]));
+    },
+    dataInit (vehicleNo) {
+      this.$get(`/cos/vehicle-info/detail/${vehicleNo}`).then((r) => {
+        this.vehicleInfo = r.data.vehicle
+        this.shopInfo = r.data.shop
+        this.brandInfo = r.data.brand
+        this.typeInfo = r.data.type
+      })
     },
     imagesInit (images) {
       if (images !== null && images !== '') {

@@ -4,12 +4,12 @@
       <a-form ref="formRegister" :autoFormCreate="(form)=>{this.form = form}" id="formRegister">
         <a-divider orientation="left"><span style="font-size: 12px">账户注册</span></a-divider>
         <a-form-item>
-          <a-radio-group default-value="1" v-model="registType" button-style="solid">
+          <a-radio-group default-value="1" v-model="registType" button-style="solid" style="width: 100%">
             <a-radio-button value="2">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;药店&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              商家
             </a-radio-button>
             <a-radio-button value="3">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              用户
             </a-radio-button>
           </a-radio-group>
         </a-form-item>

@@ -7,7 +7,7 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药品名称"
+                label="商品名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.drugName"/>
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药店名称"
+                label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.pharmacyName"/>
@@ -113,7 +113,7 @@ export default {
           }
         }
       }, {
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'drugName'
       }, {
         title: '品牌',
@@ -145,7 +145,7 @@ export default {
           }
         }
       }, {
-        title: '药店名称',
+        title: '商家名称',
         dataIndex: 'pharmacyName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -155,7 +155,7 @@ export default {
           }
         }
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -167,7 +167,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '药店地址',
+        title: '商家地址',
         dataIndex: 'address',
         customRender: (text, row, index) => {
           if (text !== null) {

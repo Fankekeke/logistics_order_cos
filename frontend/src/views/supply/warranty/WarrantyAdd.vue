@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="药品采购"
+    title="商品采购"
     :maskClosable="false"
     width=1150
     placement="right"
@@ -24,10 +24,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label='选择药店'>
+          <a-form-item label='选择商家'>
             <a-select @change="pharmacyCheck" v-decorator="[
               'pharmacyId',
-              { rules: [{ required: true, message: '请输入采购药店!' }] }
+              { rules: [{ required: true, message: '请输入采购商家!' }] }
               ]">
               <a-select-option :value="item.id" v-for="(item, index) in pharmacyList" :key="index">{{ item.name }}</a-select-option>
             </a-select>
@@ -45,7 +45,7 @@
       <br/>
       <a-row :gutter="10">
         <a-divider orientation="left">
-          <span style="font-size: 13px">药品信息</span>
+          <span style="font-size: 13px">商品信息</span>
         </a-divider>
         <a-col :span="24">
           <a-table :columns="columns" :data-source="dataList" :pagination="false">
@@ -125,7 +125,7 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'name',
         scopedSlots: {customRender: 'nameShow'}
       }, {
@@ -133,7 +133,7 @@ export default {
         dataIndex: 'reserve',
         scopedSlots: {customRender: 'reserveShow'}
       }, {
-        title: '功效',
+        title: '品牌',
         dataIndex: 'rawMaterial',
         ellipsis: true,
         scopedSlots: {customRender: 'rawMaterialShow'}

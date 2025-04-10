@@ -7,7 +7,7 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药品编号"
+                label="商品编号"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.code"/>
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药品名称"
+                label="商品名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.name"/>
@@ -23,7 +23,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="药店名称"
+                label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.merchantName"/>
@@ -127,15 +127,15 @@ export default {
     }),
     columns () {
       return [{
-        title: '药品编号',
+        title: '商品编号',
         dataIndex: 'code',
         ellipsis: true
       }, {
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'name',
         ellipsis: true
       }, {
-        title: '药品类型',
+        title: '商品类型',
         dataIndex: 'typeName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -146,7 +146,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -158,7 +158,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '药店名称',
+        title: '商家名称',
         dataIndex: 'merchantName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -169,7 +169,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '药店图片',
+        title: '商家图片',
         dataIndex: 'merchantImages',
         customRender: (text, record, index) => {
           if (!record.merchantImages) return <a-avatar shape="square" icon="user" />
@@ -181,7 +181,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '功效',
+        title: '品牌',
         dataIndex: 'rawMaterial',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -268,7 +268,7 @@ export default {
     },
     handledishesAddSuccess () {
       this.dishesAdd.visiable = false
-      this.$message.success('新增药品成功')
+      this.$message.success('新增商品成功')
       this.search()
     },
     edit (record) {
@@ -280,7 +280,7 @@ export default {
     },
     handledishesEditSuccess () {
       this.dishesEdit.visiable = false
-      this.$message.success('修改药品成功')
+      this.$message.success('修改商品成功')
       this.search()
     },
     handleDeptChange (value) {

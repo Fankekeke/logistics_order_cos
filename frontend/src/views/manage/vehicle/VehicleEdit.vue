@@ -75,16 +75,16 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="6">
-          <a-form-item label='所属用户' v-bind="formItemLayout">
-            <a-select v-decorator="[
-              'userId',
-              { rules: [{ required: true, message: '请输入所属用户!' }] }
-              ]">
-              <a-select-option :value="item.id" v-for="(item, index) in shopList" :key="index">{{ item.name }}</a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
+<!--        <a-col :span="6">-->
+<!--          <a-form-item label='所属商家' v-bind="formItemLayout">-->
+<!--            <a-select v-decorator="[-->
+<!--              'userId',-->
+<!--              { rules: [{ required: true, message: '请输入所属商家!' }] }-->
+<!--              ]">-->
+<!--              <a-select-option :value="item.id" v-for="(item, index) in shopList" :key="index">{{ item.name }}</a-select-option>-->
+<!--            </a-select>-->
+<!--          </a-form-item>-->
+<!--        </a-col>-->
         <a-col :span="24">
           <a-form-item label='照片' v-bind="formItemLayout">
             <a-upload

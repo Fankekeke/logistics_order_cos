@@ -86,6 +86,7 @@ public class VehicleInfo implements Serializable {
     /**
      * 所属商家
      */
+    @TableField(exist = false)
     private Integer merchantId;
 
     /**

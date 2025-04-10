@@ -7,56 +7,24 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="员工姓名"
+                label="车牌号码"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.staffName"/>
+                <a-input v-model="queryParams.vehicleNumber"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="所属年份"
+                label="所属商家"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-select v-model="queryParams.year" allowClear>
-                  <a-select-option value="2019">2019</a-select-option>
-                  <a-select-option value="2020">2020</a-select-option>
-                  <a-select-option value="2021">2021</a-select-option>
-                  <a-select-option value="2022">2022</a-select-option>
-                  <a-select-option value="2023">2023</a-select-option>
-                  <a-select-option value="2024">2024</a-select-option>
-                  <a-select-option value="2025">2025</a-select-option>
-                  <a-select-option value="2026">2026</a-select-option>
-                  <a-select-option value="2027">2027</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="所属月份"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-select v-model="queryParams.month" allowClear>
-                  <a-select-option value="1">1月</a-select-option>
-                  <a-select-option value="2">2月</a-select-option>
-                  <a-select-option value="3">3月</a-select-option>
-                  <a-select-option value="4">4月</a-select-option>
-                  <a-select-option value="5">5月</a-select-option>
-                  <a-select-option value="6">6月</a-select-option>
-                  <a-select-option value="7">7月</a-select-option>
-                  <a-select-option value="8">8月</a-select-option>
-                  <a-select-option value="9">9月</a-select-option>
-                  <a-select-option value="10">10月</a-select-option>
-                  <a-select-option value="11">11月</a-select-option>
-                  <a-select-option value="12">12月</a-select-option>
-                </a-select>
+                <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
           </div>
           <span style="float: right; margin-top: 3px;">
             <a-button type="primary" @click="search">查询</a-button>
             <a-button style="margin-left: 8px" @click="reset">重置</a-button>
-            <a-button style="margin-left: 8px" @click="exportCheck">导出</a-button>
           </span>
         </a-row>
       </a-form>
@@ -78,7 +46,6 @@
                @change="handleTableChange">
         <template slot="titleShow" slot-scope="text, record">
           <template>
-            <a-badge status="processing"/>
             <a-tooltip>
               <template slot="title">
                 {{ record.title }}
@@ -87,65 +54,54 @@
             </a-tooltip>
           </template>
         </template>
-        <template slot="contentShow" slot-scope="text, record">
-          <template>
-            <a-tooltip>
-              <template slot="title">
-                {{ record.remark }}
-              </template>
-              {{ record.remark.slice(0, 30) }} ...
-            </a-tooltip>
-          </template>
-        </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="bulb" theme="twoTone" twoToneColor="#4a9ff5" @click="view(record)" title="详 情" style="margin-right: 15px"></a-icon>
-<!--          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>-->
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon type="file-search" @click="handlevehicleViewOpen(record)" title="详 情" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <salaryRecords-add
-      v-if="salaryRecordsAdd.visiable"
-      @close="handlesalaryRecordsAddClose"
-      @success="handlesalaryRecordsAddSuccess"
-      :salaryRecordsAddVisiable="salaryRecordsAdd.visiable">
-    </salaryRecords-add>
-    <salaryRecords-edit
-      ref="salaryRecordsEdit"
-      @close="handlesalaryRecordsEditClose"
-      @success="handlesalaryRecordsEditSuccess"
-      :salaryRecordsEditVisiable="salaryRecordsEdit.visiable">
-    </salaryRecords-edit>
-    <salaryRecords-view
-      @close="handlesalaryRecordsViewClose"
-      :salaryRecordsShow="salaryRecordsView.visiable"
-      :salaryRecordsData="salaryRecordsView.data">
-    </salaryRecords-view>
+    <vehicle-add
+      v-if="vehicleAdd.visiable"
+      @close="handlevehicleAddClose"
+      @success="handlevehicleAddSuccess"
+      :vehicleAddVisiable="vehicleAdd.visiable">
+    </vehicle-add>
+    <vehicle-edit
+      ref="vehicleEdit"
+      @close="handlevehicleEditClose"
+      @success="handlevehicleEditSuccess"
+      :vehicleEditVisiable="vehicleEdit.visiable">
+    </vehicle-edit>
+    <vehicle-view
+      @close="handlevehicleViewClose"
+      :vehicleShow="vehicleView.visiable"
+      :vehicleData="vehicleView.data">
+    </vehicle-view>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
-import salaryRecordsAdd from './SalaryRecordsAdd'
-import salaryRecordsEdit from './SalaryRecordsEdit'
+import vehicleAdd from './VehicleAdd'
+import vehicleEdit from './VehicleEdit'
+import vehicleView from './VehicleView'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import salaryRecordsView from './SalaryRecordsView'
-import { newSpread, floatForm, floatReset, saveExcel } from '@/utils/spreadJS'
 moment.locale('zh-cn')
 
 export default {
-  name: 'salaryRecords',
-  components: {salaryRecordsView, salaryRecordsAdd, salaryRecordsEdit, RangeDate},
+  name: 'vehicle',
+  components: {vehicleAdd, vehicleEdit, vehicleView, RangeDate},
   data () {
     return {
       advanced: false,
-      salaryRecordsAdd: {
+      vehicleAdd: {
         visiable: false
       },
-      salaryRecordsEdit: {
+      vehicleEdit: {
         visiable: false
       },
-      salaryRecordsView: {
+      vehicleView: {
         visiable: false,
         data: null
       },
@@ -163,7 +119,8 @@ export default {
         showQuickJumper: true,
         showSizeChanger: true,
         showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`
-      }
+      },
+      brandList: []
     }
   },
   computed: {
@@ -172,11 +129,35 @@ export default {
     }),
     columns () {
       return [{
-        title: '员工编号',
-        dataIndex: 'staffCode'
+        title: '车辆编号',
+        dataIndex: 'vehicleNo'
       }, {
-        title: '员工姓名',
-        dataIndex: 'staffName'
+        title: '车牌号码',
+        dataIndex: 'vehicleNumber'
+      }, {
+        title: '车辆名称',
+        dataIndex: 'name'
+      }, {
+        title: '车辆类型',
+        dataIndex: 'vehicleType',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case '1':
+              return <a-tag>72V以上电动车</a-tag>
+            case '2':
+              return <a-tag>60V-72V电动车</a-tag>
+            case '3':
+              return <a-tag>48V电动车</a-tag>
+            case '4':
+              return <a-tag>老年助力三轮车</a-tag>
+            case '5':
+              return <a-tag>摩托车</a-tag>
+            case '6':
+              return <a-tag>燃油车</a-tag>
+            default:
+              return '- -'
+          }
+        }
       }, {
         title: '照片',
         dataIndex: 'images',
@@ -184,31 +165,41 @@ export default {
           if (!record.images) return <a-avatar shape="square" icon="user" />
           return <a-popover>
             <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images } />
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
             </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images } />
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
           </a-popover>
         }
       }, {
-        title: '所属药店',
-        dataIndex: 'merchantName',
+        title: '燃料类型',
+        dataIndex: 'fuelType',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case '1':
+              return <a-tag>燃油</a-tag>
+            case '2':
+              return <a-tag>柴油</a-tag>
+            case '3':
+              return <a-tag>油电混动</a-tag>
+            case '4':
+              return <a-tag>电能</a-tag>
+            default:
+              return '- -'
+          }
+        }
+      }, {
+        title: '所属商家',
+        dataIndex: 'userName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
           } else {
             return '- -'
           }
-        },
-        ellipsis: true
-      }, {
-        title: '发放时间',
-        dataIndex: 'year',
-        customRender: (text, row, index) => {
-          return row.year + '年' + row.month + '月'
         }
       }, {
-        title: '实发工资',
-        dataIndex: 'payroll',
+        title: '联系电话',
+        dataIndex: 'phone',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
@@ -217,9 +208,15 @@ export default {
           }
         }
       }, {
-        title: '备注',
-        dataIndex: 'remark',
-        scopedSlots: {customRender: 'contentShow'}
+        title: '创建时间',
+        dataIndex: 'createDate',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -231,18 +228,22 @@ export default {
     this.fetch()
   },
   methods: {
-    exportCheck () {
-      this.$message.loading('正在生成', 0)
-      this.$get('/cos/salary-records/export', { ...this.queryParams }).then((r) => {
-        let newData = []
-        r.data.data.forEach((item, index) => {
-          newData.push([item.staffCode, item.staffName !== null ? item.staffName : '- -', item.year !== null ? item.year : '- -', item.month !== null ? item.month : '- -', item.basicWage !== null ? item.basicWage : '- -', item.postAllowance !== null ? item.postAllowance : '- -', item.performanceBonus !== null ? item.performanceBonus : '- -', item.overtimePay !== null ? item.overtimePay : '- -', item.holidayCosts !== null ? item.holidayCosts : '- -', item.pension !== null ? item.pension : '- -', item.unemployment !== null ? item.unemployment : '- -', item.medicalInsurance !== null ? item.medicalInsurance : '- -', item.tax !== null ? item.tax : '- -', item.housingFund !== null ? item.housingFund : '- -', item.payroll !== null ? item.payroll : '- -'])
-        })
-        let spread = newSpread('staff')
-        spread = floatForm(spread, 'staff', newData)
-        saveExcel(spread, '工资报表.xlsx')
-        floatReset(spread, 'staff', newData.length)
-        this.$message.destroy()
+    handlevehicleViewClose () {
+      this.vehicleView.visiable = false
+    },
+    handlevehicleViewOpen (row) {
+      this.vehicleView.data = row
+      this.vehicleView.visiable = true
+    },
+    selectShopList () {
+      this.$get(`/cos/brand-info/list`).then((r) => {
+        this.brandList = r.data.data
+      })
+    },
+    editStatus (row, status) {
+      this.$post('/cos/vehicle-info/account/status', { vehicleId: row.id, status }).then((r) => {
+        this.$message.success('修改成功')
+        this.fetch()
       })
     },
     onSelectChange (selectedRowKeys) {
@@ -251,35 +252,28 @@ export default {
     toggleAdvanced () {
       this.advanced = !this.advanced
     },
-    view (record) {
-      this.salaryRecordsView.visiable = true
-      this.salaryRecordsView.data = record
-    },
     add () {
-      this.salaryRecordsAdd.visiable = true
+      this.vehicleAdd.visiable = true
     },
-    handlesalaryRecordsAddClose () {
-      this.salaryRecordsAdd.visiable = false
+    handlevehicleAddClose () {
+      this.vehicleAdd.visiable = false
     },
-    handlesalaryRecordsAddSuccess () {
-      this.salaryRecordsAdd.visiable = false
-      this.$message.success('新增成功')
+    handlevehicleAddSuccess () {
+      this.vehicleAdd.visiable = false
+      this.$message.success('新增车辆成功')
       this.search()
     },
     edit (record) {
-      this.$refs.salaryRecordsEdit.setFormValues(record)
-      this.salaryRecordsEdit.visiable = true
+      this.$refs.vehicleEdit.setFormValues(record)
+      this.vehicleEdit.visiable = true
     },
-    handlesalaryRecordsEditClose () {
-      this.salaryRecordsEdit.visiable = false
+    handlevehicleEditClose () {
+      this.vehicleEdit.visiable = false
     },
-    handlesalaryRecordsEditSuccess () {
-      this.salaryRecordsEdit.visiable = false
-      this.$message.success('修改成功')
+    handlevehicleEditSuccess () {
+      this.vehicleEdit.visiable = false
+      this.$message.success('修改车辆成功')
       this.search()
-    },
-    handlesalaryRecordsViewClose () {
-      this.salaryRecordsView.visiable = false
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -296,7 +290,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/salary-records/' + ids).then(() => {
+          that.$delete('/cos/vehicle-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -366,14 +360,11 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.year === undefined) {
-        delete params.year
+      if (params.brand === undefined) {
+        delete params.brand
       }
-      if (params.month === undefined) {
-        delete params.month
-      }
-      params.staffId = this.currentUser.userId
-      this.$get('/cos/salary-records/page', {
+      params.userId = this.currentUser.userId
+      this.$get('/cos/vehicle-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

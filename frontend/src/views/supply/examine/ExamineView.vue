@@ -11,7 +11,7 @@
         <a-col :span="12"><b>问题单号：</b>
           {{ purchaseData.purchaseCode }}
         </a-col>
-        <a-col :span="12"><b>所属药店：</b>
+        <a-col :span="12"><b>所属商家：</b>
           {{ purchaseData.pharmacyName ? purchaseData.pharmacyName : '- -' }}
         </a-col>
       </a-row>
@@ -26,7 +26,7 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="12"><b>问题药品：</b>
+        <a-col :span="12"><b>问题商品：</b>
           {{ purchaseData.drugName ? purchaseData.drugName : '- -' }}
         </a-col>
         <a-col :span="12"><b>处理时间：</b>
@@ -76,16 +76,16 @@ export default {
     },
     columns () {
       return [{
-        title: '药品名称',
+        title: '商品名称',
         dataIndex: 'drugName'
       }, {
-        title: '功效',
+        title: '品牌',
         dataIndex: 'rawMaterial'
       }, {
         title: '数量',
         dataIndex: 'reserve'
       }, {
-        title: '药品图片',
+        title: '商品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     dataInit (purchaseId) {
-      // 药品信息
+      // 商品信息
       this.$get(`/cos/purchase-info/detail/${purchaseId}`).then((r) => {
         this.durgList = r.data.drug
         this.logisticsList = r.data.logistics
