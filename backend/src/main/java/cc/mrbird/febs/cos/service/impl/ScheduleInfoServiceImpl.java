@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
@@ -36,6 +37,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
 
     private final IAddressInfoService addressInfoService;
 
+    @Lazy
     private final IOrderInfoService orderInfoService;
 
     private final IUserInfoService userInfoService;
@@ -124,6 +126,10 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
             // vehicleInfo.setWorkStatus("1");
             vehicleInfoService.updateById(vehicleInfo);
 
+            // 更新订单状态
+            orderInfo.setStatus("2");
+            orderInfoService.updateById(orderInfo);
+
             scheduleInfo.setScheduleCode(scheduleCode);
             return this.save(scheduleInfo);
         } else {
@@ -200,7 +206,7 @@ public class ScheduleInfoServiceImpl extends ServiceImpl<ScheduleInfoMapper, Sch
         if (hasSchedule) {
             vehicleInfoService.update(Wrappers.<VehicleInfo>lambdaUpdate().set(VehicleInfo::getWorkStatus, "0").set(VehicleInfo::getScheduleCode, null).eq(VehicleInfo::getId, scheduleInfo.getVehicleId()));
         } else {
-            orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getStatus, "1").eq(OrderInfo::getId, orderId));
+            orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getStatus, "3").eq(OrderInfo::getId, orderId));
         }
         return true;
     }

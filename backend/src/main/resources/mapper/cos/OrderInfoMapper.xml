@@ -5,42 +5,45 @@
     <!-- 分页获取订单信息 -->
     <select id="selectOrderPage" resultType="java.util.LinkedHashMap">
         select
-            oi.id,
-            oi.code,
-            oi.user_id,
-            oi.merchant_id,
-            oi.order_price,
-            oi.order_integral,
-            oi.after_order_price,
-            oi.discount,
-            oi.integral,
-            oi.status,
-            oi.`type`,
-            oi.kilometre,
-            oi.distribution_price,
-            oi.create_date,
-            oi.pay_date,
-            oi.service_date,
-            oi.address_id,
-            oi.staff_id,
-            oi.images,
-            oi.content,
-            oi.medication_flag,
-            ui.name as userName,
-            ui.images as userImages,
-            mi.name as merchantName,
-            mi.images as merchantImages,
-            ei.id as evaluateId
+        oi.id,
+        oi.code,
+        oi.user_id,
+        oi.merchant_id,
+        oi.order_price,
+        oi.order_integral,
+        oi.after_order_price,
+        oi.discount,
+        oi.integral,
+        oi.status,
+        oi.`type`,
+        oi.kilometre,
+        oi.distribution_price,
+        oi.create_date,
+        oi.pay_date,
+        oi.service_date,
+        oi.address_id,
+        oi.staff_id,
+        oi.images,
+        oi.content,
+        oi.medication_flag,
+        ui.name as userName,
+        ui.images as userImages,
+        mi.name as merchantName,
+        mi.images as merchantImages,
+        ei.id as evaluateId,
+        si.schedule_code as scheduleCode
         from
-            order_info oi
-                left join user_info ui on
-                (ui.id = oi.user_id)
-                left join merchant_info mi on
-                (mi.id = oi.merchant_id)
-                left join evaluate_info ei on
-                (ei.order_id = oi.id)
+        order_info oi
+        left join user_info ui on
+        (ui.id = oi.user_id)
+        left join merchant_info mi on
+        (mi.id = oi.merchant_id)
+        left join evaluate_info ei on
+        (ei.order_id = oi.id)
+        left join schedule_info si on
+        (si.order_id = oi.id)
         where
-            1 = 1
+        1 = 1
         <if test="orderInfo.code != null and orderInfo.code != ''">
             AND oi.name LIKE CONCAT('%',#{orderInfo.code},'%')
         </if>
@@ -57,7 +60,7 @@
             AND mi.user_id = #{orderInfo.merchantId}
         </if>
         order by
-            oi.create_date desc
+        oi.create_date desc
     </select>
 
     <!-- 本月订单信息 -->

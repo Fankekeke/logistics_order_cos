@@ -3,17 +3,21 @@ package cc.mrbird.febs.cos.controller;
 
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.R;
+import cc.mrbird.febs.cos.entity.MerchantInfo;
 import cc.mrbird.febs.cos.entity.OrderInfo;
 import cc.mrbird.febs.cos.entity.PharmacyInventory;
-import cc.mrbird.febs.cos.service.IOrderInfoService;
-import cc.mrbird.febs.cos.service.IPharmacyInventoryService;
+import cc.mrbird.febs.cos.entity.UserInfo;
+import cc.mrbird.febs.cos.service.*;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +33,16 @@ public class OrderInfoController {
     private final IOrderInfoService orderInfoService;
 
     private final IPharmacyInventoryService pharmacyInventoryService;
+
+    private final TemplateEngine templateEngine;
+
+    private final IMailService mailService;
+
+    private final IScheduleInfoService scheduleInfoService;
+
+    private final IUserInfoService userInfoService;
+
+    private final IMerchantInfoService merchantInfoService;
 
     /**
      * 分页获取订单信息
@@ -125,8 +139,22 @@ public class OrderInfoController {
      * @return 结果
      */
     @GetMapping("/audit")
-    public R audit(@RequestParam("orderCode") String orderCode, @RequestParam("status") String status) {
-        return R.ok(orderInfoService.audit(orderCode, status));
+    public R audit(@RequestParam("orderCode") String orderCode, @RequestParam("status") String status) throws FebsException {
+        OrderInfo order = orderInfoService.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getCode, orderCode));
+
+        UserInfo userInfo = userInfoService.getById(order.getUserId());
+
+        // 邮箱通知
+        if (StrUtil.isNotEmpty(userInfo.getMail())) {
+            MerchantInfo merchantInfo = merchantInfoService.getById(order.getMerchantId());
+            Context context = new Context();
+            context.setVariable("today", DateUtil.formatDate(new Date()));
+            context.setVariable("custom", userInfo.getName() + "，您好，在 " + merchantInfo.getName() + " 消费订单 " + order.getCode() + " 已完成，可进行评价");
+            String emailContent = templateEngine.process("registerEmail", context);
+            mailService.sendHtmlMail(userInfo.getMail(), DateUtil.formatDate(new Date()) + "订单完成", emailContent);
+        }
+        scheduleInfoService.orderCheck(order.getId());
+        return R.ok(orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getStatus, status).eq(OrderInfo::getCode, orderCode)));
     }
 
     /**

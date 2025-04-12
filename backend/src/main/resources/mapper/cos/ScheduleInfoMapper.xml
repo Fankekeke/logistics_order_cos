@@ -38,8 +38,8 @@
         <if test="scheduleInfo.userName != null and scheduleInfo.userName != ''">
             AND ui.name LIKE CONCAT('%',#{scheduleInfo.userName},'%')
         </if>
-        <if test="scheduleInfo.userId != null and scheduleInfo.userId != ''">
-            AND ui.user_id = #{scheduleInfo.userId}
+        <if test="scheduleInfo.merchantId != null and scheduleInfo.merchantId != ''">
+            AND ui.user_id = #{scheduleInfo.merchantId}
         </if>
         GROUP BY
         si.schedule_code

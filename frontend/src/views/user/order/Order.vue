@@ -64,7 +64,7 @@
         </template>
         <template slot="operation" slot-scope="text, record">
           <a-icon type="file-search" @click="orderViewOpen(record)" title="详 情"></a-icon>
-          <a-icon v-if="record.status >= 1" type="warning" @click="orderReturn(record)" title="退 货" style="margin-left: 15px"></a-icon>
+          <a-icon v-if="record.type == 0 && record.status == 1 || record.type == 1 && record.status == 3" type="warning" @click="orderReturn(record)" title="退 货" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.status ==  0" type="alipay" @click="orderPay(record)" title="支 付" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.status == 2 && record.type == 1" type="check" @click="orderComplete(record)" title="订单完成" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.type == 1" type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
@@ -297,6 +297,7 @@ export default {
       }, {
         title: '操作',
         dataIndex: 'operation',
+        width: '230px',
         scopedSlots: {customRender: 'operation'}
       }]
     }
@@ -307,19 +308,17 @@ export default {
   methods: {
     download (row) {
       this.$message.loading('正在生成', 0)
-      this.$get(`/cos/order-template-info/queryDefaultTemplate`).then((rep) => {
-        this.$get(`/cos/order-info/${row.id}`).then((r) => {
-          let orderItemInfo = r.data.orderItem
-          let newData = []
-          orderItemInfo.forEach((item, index) => {
-            newData.push([(index + 1).toFixed(0), item.dishesName, item.portion !== null ? item.portion : '- -', item.amount !== null ? item.amount : '- -', item.unitPrice, item.rawMaterial])
-          })
-          let spread = newSpread(rep.data.data.code)
-          spread = floatForm(spread, rep.data.data.code, newData)
-          saveExcel(spread, '订单小票.xlsx')
-          floatReset(spread, rep.data.data.code, newData.length)
-          this.$message.destroy()
+      this.$get(`/cos/order-info/${row.id}`).then((r) => {
+        let orderItemInfo = r.data.orderItem
+        let newData = []
+        orderItemInfo.forEach((item, index) => {
+          newData.push([(index + 1).toFixed(0), item.dishesName, item.portion !== null ? item.portion : '- -', item.amount !== null ? item.amount : '- -', item.unitPrice, item.rawMaterial])
         })
+        let spread = newSpread('export20250316003552')
+        spread = floatForm(spread, 'export20250316003552', newData)
+        saveExcel(spread, '订单小票.xlsx')
+        floatReset(spread, 'export20250316003552', newData.length)
+        this.$message.destroy()
       })
     },
     orderReturn (record) {

@@ -56,7 +56,7 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @param status    状态
      * @return 结果
      */
-    boolean audit(String orderCode, String status);
+    boolean audit(String orderCode, String status) throws FebsException;
 
     /**
      * 获取订单付款信息

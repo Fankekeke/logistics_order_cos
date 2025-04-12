@@ -7,18 +7,18 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="订单编号"
+                label="所属车次"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.code"/>
+                <a-input v-model="queryParams.scheduleCode"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户名称"
+                label="车牌号码"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.userName"/>
+                <a-input v-model="queryParams.vehicleNumber"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
@@ -26,7 +26,7 @@
                 label="商家名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.merchantName"/>
+                <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
           </div>
@@ -134,11 +134,22 @@ export default {
     }),
     columns () {
       return [{
-        title: '订单编号',
-        dataIndex: 'code',
+        title: '所属车次',
+        dataIndex: 'scheduleCode',
         ellipsis: true
       }, {
-        title: '下单用户',
+        title: '总里程（KM）',
+        dataIndex: 'totalDistance',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return (text / 1000).toFixed(1) + '公里'
+          } else {
+            return '- -'
+          }
+        },
+        ellipsis: true
+      }, {
+        title: '所属商家',
         dataIndex: 'userName',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -149,102 +160,53 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '用户头像',
-        dataIndex: 'userImages',
-        customRender: (text, record, index) => {
-          if (!record.userImages) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
-          </a-popover>
-        }
-      }, {
-        title: '所属商家',
-        dataIndex: 'merchantName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
-      }, {
         title: '商家图片',
-        dataIndex: 'merchantImages',
+        dataIndex: 'images',
         customRender: (text, record, index) => {
-          if (!record.merchantImages) return <a-avatar shape="square" icon="user" />
+          if (!record.images) return <a-avatar shape="square" icon="user" />
           return <a-popover>
             <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.merchantImages.split(',')[0] } />
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
             </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.merchantImages.split(',')[0] } />
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
           </a-popover>
         }
       }, {
-        title: '订单价格（元）',
-        dataIndex: 'orderPrice',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text + '元'
-          } else {
-            return '- -'
-          }
-        }
-      }, {
-        title: '折后价格（元）',
-        dataIndex: 'afterOrderPrice',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text + '元'
-          } else {
-            return '- -'
-          }
-        }
-      }, {
-        title: '订单状态',
-        dataIndex: 'status',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case '-3':
-              return <a-tag>已退货</a-tag>
-            case '-2':
-              return <a-tag>退货中</a-tag>
-            case '-1':
-              return <a-tag color="pink">等待审核</a-tag>
-            case '0':
-              return <a-tag color="red">未支付</a-tag>
-            case '1':
-              return <a-tag>已支付</a-tag>
-            case '2':
-              return <a-tag>配送中</a-tag>
-            case '3':
-              return <a-tag>已收货</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '订单类型',
-        dataIndex: 'type',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case '0':
-              return <a-tag>店内购买</a-tag>
-            case '1':
-              return <a-tag>配送</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '下单时间',
-        dataIndex: 'createDate',
+        title: '运输车辆编号',
+        dataIndex: 'vehicleNo',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
+          } else {
+            return '- -'
+          }
+        }
+      }, {
+        title: '车牌号码',
+        dataIndex: 'vehicleNumber',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
+      }, {
+        title: '运输状态',
+        dataIndex: 'overOrderCount',
+        customRender: (text, row, index) => {
+          if (row.overOrderCount == row.orderCount) {
+            return <a-tag color="#108ee9">已完成</a-tag>
+          } else {
+            return <a-tag color="#f50">未完成</a-tag>
+          }
+        }
+      }, {
+        title: '运输单数',
+        dataIndex: 'orderCount',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text + '单'
           } else {
             return '- -'
           }
@@ -446,7 +408,6 @@ export default {
       if (params.status === undefined) {
         delete params.status
       }
-      params.merchantId = this.currentUser.userId
       this.$get('/cos/schedule-info/page', {
         ...params
       }).then((r) => {

@@ -23,164 +23,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b51975f-5e37-45a1-bd9d-0f3c12f944d0" name="Default Changelist" comment="fix -地图展示">
-      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/EvaluateInfoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/manage/schedule/Map.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/merchant/schedule/Map.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/OrderInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/OrderInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/VehicleInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/VehicleInfoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/controller/CollectInfoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/dao/CollectInfoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/entity/CollectInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/ICollectInfoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/CollectInfoServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/CollectInfoMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/entity/ScheduleInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/entity/ScheduleInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/entity/VehicleInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/entity/VehicleInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/MerchantInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/MerchantInfoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/OrderInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/OrderInfoServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/ScheduleInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/cos/service/impl/ScheduleInfoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/system/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/system/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/MerchantInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/MerchantInfoMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/ScheduleInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/ScheduleInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/VehicleInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/mapper/cos/VehicleInfoMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/login/Regist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login/Regist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/DishesView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/CustomAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/CustomAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Work.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Work.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/Dishes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/Dishes.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/evaluate/Evaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/evaluate/Evaluate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/evaluate/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/map/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/map/Map.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/member/Member.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/member/Member.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchant/Merchant.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchant/Merchant.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchant/MerchantAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchant/MerchantAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchant/MerchantEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchant/MerchantEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchant/MerchantView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchant/MerchantView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchantMember/MerchantMember.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchantMember/MerchantMember.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/merchantMember/MerchantMemberView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/merchantMember/MerchantMemberView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/order/Order.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/Order.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderAudit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderStatus.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/type/FirnitureType.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/type/FirnitureType.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/type/FirnitureTypeAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/type/FirnitureTypeAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/type/FirnitureTypeEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/type/FirnitureTypeEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/vehicle/Vehicle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/vehicle/Vehicle.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/vehicle/VehicleView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/Dishes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/Dishes.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/evaluate/Evaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/evaluate/Evaluate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/evaluate/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/member/Member.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/member/Member.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMember.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMember.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMemberView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMemberView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/modules/setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/modules/setting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/color.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/color.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login/Common.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login/Common.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/schedule/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/schedule/Map.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/schedule/Schedule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/schedule/Schedule.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/merchant/order/Order.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/Order.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderAudit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderStatus.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/personal/Personal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/personal/Personal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/statistics/generate/Generate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/statistics/generate/Generate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/statistics/report/Report.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/statistics/report/Report.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/statistics/report/ReportAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/statistics/report/ReportAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/statistics/report/ReportEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/statistics/report/ReportEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/alert/Alert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/alert/Alert.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/examine/Examine.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/examine/Examine.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/examine/ExamineAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/examine/ExamineAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/examine/ExamineView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/examine/ExamineView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/logistics/Logistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/logistics/Logistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/logistics/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/logistics/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/medication/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/medication/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/medication/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/medication/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/purchase/Purchase.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/purchase/Purchase.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/purchase/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/purchase/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/purchase/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/purchase/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/statistics/Statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/statistics/Statistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/stock/InventoryAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/stock/InventoryAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/stock/Stock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/stock/Stock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/warranty/Warranty.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/warranty/Warranty.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/warranty/WarrantyAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/warranty/WarrantyAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/stock/warranty/WarrantyView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/stock/warranty/WarrantyView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/alert/Alert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/alert/Alert.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/examine/Examine.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/examine/Examine.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/examine/ExamineAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/examine/ExamineAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/examine/ExamineView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/examine/ExamineView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/logistics/Logistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/logistics/Logistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/logistics/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/logistics/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/medication/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/medication/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/medication/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/medication/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/purchase/Purchase.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/purchase/Purchase.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/purchase/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/purchase/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/purchase/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/purchase/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/statistics/Statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/statistics/Statistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/stock/InventoryAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/stock/InventoryAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/stock/Stock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/stock/Stock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/warranty/Warranty.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/warranty/Warranty.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/warranty/WarrantyAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/warranty/WarrantyAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/supply/warranty/WarrantyView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/supply/warranty/WarrantyView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/collect/Collect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/collect/Collect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/custom/Custom.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/custom/Custom.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/custom/CustomAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/custom/CustomAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/custom/CustomEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/custom/CustomEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/evaluate/Evaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/evaluate/Evaluate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/evaluate/OrderView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/user/order/Order.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/Order.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderAudit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderEvaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderEvaluate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderStatus.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/attendance/Attendance.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/dishes/Dishes.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/dishes/DishesAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/vehicle/VehicleAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/dishes/DishesEdit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/dishes/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/vehicle/VehicleView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/evaluate/Evaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/schedule/Schedule.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/evaluate/EvaluateView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/evaluate/OrderView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/member/Member.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/member/MemberAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/member/MemberEdit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/merchantMember/MerchantMember.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/merchantMember/MerchantMemberView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/order/Order.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/schedule/Schedule.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/order/OrderAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/order/OrderAudit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/order/OrderStatus.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/order/OrderView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/personal/Personal.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/salaryRecords/SalaryRecords.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/salaryRecords/SalaryRecordsAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/salaryRecords/SalaryRecordsEdit.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/salaryRecords/SalaryRecordsView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/staff/Staff.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/vehicle/Vehicle.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/staff/StaffAdd.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/work/staff/StaffEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/vehicle/VehicleEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/alert/Alert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/alert/Alert.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/examine/Examine.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/examine/Examine.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/examine/ExamineAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/examine/ExamineAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/examine/ExamineView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/examine/ExamineView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/logistics/Logistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/logistics/Logistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/logistics/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/logistics/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/medication/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/medication/OrderView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/medication/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/medication/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/purchase/Purchase.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/purchase/Purchase.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/purchase/PurchaseAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/purchase/PurchaseAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/purchase/PurchaseView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/purchase/PurchaseView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/statistics/Statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/statistics/Statistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/stock/InventoryAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/stock/InventoryAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/stock/Stock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/stock/Stock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/warranty/Warranty.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/warranty/Warranty.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/warranty/WarrantyAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/warranty/WarrantyAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/works/warranty/WarrantyView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/works/warranty/WarrantyView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file/export20250316003552.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/file/export20250316003552.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file/purchasePlan.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/file/purchasePlan.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +75,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/dev/logistics_order_cos/frontend/src/views/merchant",
+    "last_opened_file_path": "G:/Project/20250401库房订单物流调度系统/logistics_order_cos/frontend/src/views/manage/schedule",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -227,11 +88,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Project\20250401库房订单物流调度系统\logistics_order_cos\frontend\src\views\manage\schedule" />
       <recent name="E:\dev\logistics_order_cos\frontend\src\views\merchant" />
       <recent name="E:\dev\logistics_order_cos\frontend\src\views\manage\schedule" />
       <recent name="G:\Project\20250313药房销售平台\merchant_sales_cos\frontend\src\views\work\attendance" />
       <recent name="G:\Project\20250313药房销售平台\merchant_sales_cos\frontend\src\views\work" />
-      <recent name="G:\Project\20250313药房销售平台\merchant_sales_cos\frontend\src\views\works" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Project\点餐配送系统\canteen_order_cos\frontend\src\views\merchant\personal" />
@@ -435,6 +296,7 @@
       <workItem from="1743265207087" duration="580000" />
       <workItem from="1743596964588" duration="843000" />
       <workItem from="1744247739588" duration="21290000" />
+      <workItem from="1744419948154" duration="3516000" />
     </task>
     <task id="LOCAL-00001" summary="fix -数据统计">
       <created>1692717658877</created>

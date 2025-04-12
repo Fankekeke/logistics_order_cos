@@ -89,4 +89,7 @@ public class ScheduleInfo implements Serializable {
 
     @TableField(exist = false)
     private Integer userId;
+
+    @TableField(exist = false)
+    private Integer merchantId;
 }

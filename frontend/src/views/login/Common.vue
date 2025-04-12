@@ -3,7 +3,7 @@
     <div class="content" style="margin: 0 auto">
       <div class="top">
         <div class="header">
-          <span class="title" style="color: black">库房物流调度系统</span>
+          <span class="title" style="color: black">药品库房物流调度系统</span>
         </div>
         <div class="desc"></div>
       </div>
