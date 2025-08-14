@@ -62,8 +62,7 @@ admin
 | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/10262052-96d8-47ac-915f-b2aefc203828.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/5f1faeb7-9515-44a2-945b-d43d2c5e83b5.png) |
 | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/7655b993-71ea-4183-87c6-4276026c6259.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/5b3dbb54-c06d-4dc1-bfe2-0885baeac38f.png) |
 | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/239f93c9-afe9-4968-b4fa-049f6035167f.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/4b4a7e0c-34b2-4751-9bea-087c67f70426.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/89b3c414-2d6e-43b5-a418-9abc9395001d.png) |  |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png) |
+| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/89b3c414-2d6e-43b5-a418-9abc9395001d.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png) |
 
 #### 演示视频
 
